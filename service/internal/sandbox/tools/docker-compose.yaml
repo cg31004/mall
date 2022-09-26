@@ -1,0 +1,28 @@
+#docker-compose.yaml
+version: "3"
+services:
+  redis:
+    image: redis:5.0.5-alpine
+    container_name: mall_redis
+    command: redis-server /etc/redis.conf  --requirepass abc123
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/redis.conf:/etc/redis.conf
+  mysql:
+    image: mysql:5.7
+    platform: linux/x86_64
+    container_name: mall_mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --skip_character_set_client_handshake --default_time_zone='+0:00'
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123
+      MYSQL_DATABASE: mall
+    ports:
+      - "3306:3306"
+    volumes:
+      - central_admin_data_volume:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+volumes:
+  central_admin_data_volume:
