@@ -1,0 +1,10 @@
+ops_config:
+  mysql_service:
+    address: "localhost:3306"
+    username: "root"
+    password: "abc123"
+    database: "mall"
+  redis_service:
+    address: 'localhost:6379'
+    password: ''
+    db: 0

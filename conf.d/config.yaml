@@ -1,0 +1,19 @@
+app_config:
+  log_config:
+    name: "mall"
+    env: "local"
+    level: "debug"
+  gin_config:
+    port: ":8800"
+    debug_mode: true
+  mysql_config:
+    log_mode: true
+    max_idle: 3
+    max_open: 10
+    conn_max_life_min: 15
+  local_cache_config:
+    default_expiration_sec: 60
+  redis_config:
+    session_expiration_sec: 1209600
+
+
