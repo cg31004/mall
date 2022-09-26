@@ -11,7 +11,7 @@ import (
 	"github.com/go-redis/redis/v8"
 	"golang.org/x/xerrors"
 
-	"mall/service/internal/utils/converter"
+	"simon/mall/service/internal/utils/converter"
 )
 
 //go:generate mockery --name IRedisClient --structname MockRedisClient --output mock_redis --outpkg mock_redis --filename mock_redis.go --with-expecter

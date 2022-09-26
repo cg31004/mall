@@ -11,12 +11,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/dig"
 
-	"mall/service/internal/app/job"
-	"mall/service/internal/app/web"
-	"mall/service/internal/binder"
-	"mall/service/internal/config"
-	"mall/service/internal/thirdparty/logger"
-	"mall/service/internal/thirdparty/mysqlcli"
+	"simon/mall/service/internal/app/web"
+	"simon/mall/service/internal/binder"
+	"simon/mall/service/internal/config"
+	"simon/mall/service/internal/thirdparty/logger"
+	"simon/mall/service/internal/thirdparty/mysqlcli"
 )
 
 func Run() {
@@ -37,7 +36,6 @@ type digIn struct {
 	DB        mysqlcli.IMySQLClient
 	SysLogger logger.ILogger `name:"sysLogger"`
 
-	JobService     job.IService
 	WebRestService web.IService
 }
 
@@ -48,7 +46,6 @@ func initService(in digIn) {
 	ginMode(in)
 	in.SysLogger.Info(ctx, fmt.Sprintf("[Build Info] %s", getBuildInfo()))
 
-	in.JobService.Run()
 	srv := in.WebRestService.Run(ctx)
 	serverInterrupt(ctx, in, srv)
 }

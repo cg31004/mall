@@ -6,9 +6,9 @@ import (
 	"golang.org/x/xerrors"
 	"gorm.io/gorm"
 
-	"mall/service/internal/errs"
-	"mall/service/internal/model/po"
-	"mall/service/internal/utils/timelogger"
+	"simon/mall/service/internal/errs"
+	"simon/mall/service/internal/model/po"
+	"simon/mall/service/internal/utils/timelogger"
 )
 
 //go:generate mockery --name IMemberRepo --structname MockMemberRepo --output mock_repository --outpkg mock_repository --filename mock_member.go --with-expecter

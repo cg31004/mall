@@ -5,7 +5,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 
-	"mall/service/internal/model/po"
+	"simon/mall/service/internal/model/po"
 )
 
 func parsePaging(pager *po.Pager) func(dc *gorm.DB) *gorm.DB {

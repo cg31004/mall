@@ -3,9 +3,9 @@ package binder
 import (
 	"go.uber.org/dig"
 
-	"mall/service/internal/controller"
-	"mall/service/internal/controller/handler"
-	"mall/service/internal/controller/middleware"
+	"simon/mall/service/internal/controller"
+	"simon/mall/service/internal/controller/handler"
+	"simon/mall/service/internal/controller/middleware"
 )
 
 func provideController(binder *dig.Container) {

@@ -3,7 +3,7 @@ package po
 import (
 	"time"
 
-	"mall/service/internal/constant"
+	"simon/mall/service/internal/constant"
 )
 
 type Product struct {

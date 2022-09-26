@@ -6,11 +6,11 @@ import (
 	"github.com/jinzhu/copier"
 	"golang.org/x/xerrors"
 
-	"mall/service/internal/constant"
-	"mall/service/internal/errs"
-	"mall/service/internal/model/bo"
-	"mall/service/internal/model/po"
-	"mall/service/internal/utils/timelogger"
+	"simon/mall/service/internal/constant"
+	"simon/mall/service/internal/errs"
+	"simon/mall/service/internal/model/bo"
+	"simon/mall/service/internal/model/po"
+	"simon/mall/service/internal/utils/timelogger"
 )
 
 type IProductUseCase interface {

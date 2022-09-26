@@ -3,7 +3,7 @@ package binder
 import (
 	"go.uber.org/dig"
 
-	"mall/service/internal/repository"
+	"simon/mall/service/internal/repository"
 )
 
 func provideRepository(binder *dig.Container) {

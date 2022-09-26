@@ -3,8 +3,8 @@ package product
 import (
 	"go.uber.org/dig"
 
-	"mall/service/internal/repository"
-	"mall/service/internal/thirdparty/mysqlcli"
+	"simon/mall/service/internal/repository"
+	"simon/mall/service/internal/thirdparty/mysqlcli"
 )
 
 func NewProduct(in digIn) digOut {

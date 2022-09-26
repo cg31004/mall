@@ -5,12 +5,12 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"mall/service/internal/errs"
-	"mall/service/internal/model/bo"
-	"mall/service/internal/model/po"
-	"mall/service/internal/utils/ctxs"
-	"mall/service/internal/utils/timelogger"
-	"mall/service/internal/utils/uuid"
+	"simon/mall/service/internal/errs"
+	"simon/mall/service/internal/model/bo"
+	"simon/mall/service/internal/model/po"
+	"simon/mall/service/internal/utils/ctxs"
+	"simon/mall/service/internal/utils/timelogger"
+	"simon/mall/service/internal/utils/uuid"
 )
 
 type IMemberChartUseCase interface {
@@ -64,6 +64,7 @@ func (uc *memberChartUseCase) GetMemberChart(ctx context.Context) ([]*bo.MemberC
 
 func (uc *memberChartUseCase) UpdateMemberChart(ctx context.Context, cond *bo.MemberChartUpdateCond) error {
 	defer timelogger.LogTime(ctx)()
+
 	memberInfo, ok := ctxs.GetSession(ctx)
 	if !ok {
 		return errs.MemberTokenError
@@ -83,6 +84,7 @@ func (uc *memberChartUseCase) UpdateMemberChart(ctx context.Context, cond *bo.Me
 
 func (uc *memberChartUseCase) CreateMemberChart(ctx context.Context, cond *bo.MemberChartCreateCond) error {
 	defer timelogger.LogTime(ctx)()
+
 	memberInfo, ok := ctxs.GetSession(ctx)
 	if !ok {
 		return errs.MemberTokenError

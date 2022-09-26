@@ -10,11 +10,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/dig"
 
-	"mall/service/internal/config"
-	"mall/service/internal/controller"
-	"mall/service/internal/controller/middleware"
-	"mall/service/internal/thirdparty/errortool"
-	"mall/service/internal/thirdparty/logger"
+	"simon/mall/service/internal/config"
+	"simon/mall/service/internal/controller"
+	"simon/mall/service/internal/controller/middleware"
+	"simon/mall/service/internal/thirdparty/errortool"
+	"simon/mall/service/internal/thirdparty/logger"
 )
 
 func NewWebRestService(in restServiceIn) IService {
@@ -38,7 +38,9 @@ type restServiceIn struct {
 	AppLogger logger.ILogger `name:"appLogger"`
 
 	//web api
-	MemberCtrl controller.IMemberCtrl
+	MemberCtrl  controller.IMemberCtrl
+	ProductCtrl controller.IProductCtrl
+	OrderCtrl   controller.IOrderCtrl
 
 	ResponseMiddleware   middleware.IResponseMiddleware
 	MemberAuthMiddleware middleware.IMemberAuthMiddleware

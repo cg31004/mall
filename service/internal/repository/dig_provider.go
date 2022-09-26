@@ -3,8 +3,8 @@ package repository
 import (
 	"go.uber.org/dig"
 
-	"mall/service/internal/config"
-	"mall/service/internal/thirdparty/localcache"
+	"simon/mall/service/internal/config"
+	"simon/mall/service/internal/thirdparty/localcache"
 )
 
 func NewRepository(in repositoryIn) repositoryOut {

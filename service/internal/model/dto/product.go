@@ -1,6 +1,6 @@
 package dto
 
-import "mall/service/internal/constant"
+import "simon/mall/service/internal/constant"
 
 type GetProductListCond struct {
 	*PagerReq

@@ -1,10 +1,8 @@
-module mall
+module simon/mall
 
 go 1.16
 
 require (
-	github.com/bwmarrin/snowflake v0.3.0
-	github.com/casbin/casbin/v2 v2.37.4
 	github.com/fsnotify/fsnotify v1.5.4
 	github.com/gin-contrib/pprof v1.3.0
 	github.com/gin-gonic/gin v1.7.7
@@ -14,9 +12,7 @@ require (
 	github.com/jinzhu/copier v0.3.5
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible
-	github.com/pquerna/otp v1.3.0
 	github.com/spf13/viper v1.12.0
-	github.com/stretchr/testify v1.7.1
 	go.mongodb.org/mongo-driver v1.3.7
 	go.uber.org/dig v1.14.1
 	go.uber.org/zap v1.21.0

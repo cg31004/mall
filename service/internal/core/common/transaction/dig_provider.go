@@ -1,18 +1,18 @@
-package session
+package transaction
 
 import (
 	"go.uber.org/dig"
 
 	"simon/mall/service/internal/repository"
-
+	"simon/mall/service/internal/thirdparty/localcache"
 	"simon/mall/service/internal/thirdparty/mysqlcli"
 )
 
-func NewSession(in digIn) digOut {
+func NewTxn(in digIn) digOut {
 	self := &packet{
 		in: in,
 		digOut: digOut{
-			SessionUseCase: newSessionUseCase(in),
+			TxnItemCommon: newTxnItemCommon(in),
 		},
 	}
 
@@ -22,19 +22,19 @@ func NewSession(in digIn) digOut {
 type digIn struct {
 	dig.In
 	// 套件
-	DB mysqlcli.IMySQLClient
+	DB    mysqlcli.IMySQLClient
+	Cache localcache.ILocalCache
 
 	// Common
 
 	// Repo
-	MemberRepo  repository.IMemberRepo
-	SessionRepo repository.ISessionRepo
+	TxnItemRepo repository.ITxnItemRepo
 }
 
 type digOut struct {
 	dig.Out
 
-	SessionUseCase ISessionUseCase
+	TxnItemCommon ITxnItemCommon
 }
 
 type packet struct {

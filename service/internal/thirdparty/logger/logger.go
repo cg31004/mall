@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
-	"mall/service/internal/config"
+	"simon/mall/service/internal/config"
 )
 
 //go:generate mockery --name ILogger --structname MockLogger --output mock_logger --outpkg mock_logger --filename mock_logger.go --with-expecter

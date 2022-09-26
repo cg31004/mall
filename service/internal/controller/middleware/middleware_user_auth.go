@@ -5,10 +5,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"mall/service/internal/errs"
-	"mall/service/internal/model/bo"
-	"mall/service/internal/utils/ctxs"
-	"mall/service/internal/utils/timelogger"
+	"simon/mall/service/internal/errs"
+	"simon/mall/service/internal/model/bo"
+	"simon/mall/service/internal/utils/ctxs"
+	"simon/mall/service/internal/utils/timelogger"
 )
 
 type IMemberAuthMiddleware interface {

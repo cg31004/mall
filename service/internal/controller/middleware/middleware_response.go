@@ -8,11 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"mall/service/internal/constant"
-	"mall/service/internal/errs"
-	"mall/service/internal/thirdparty/errortool"
-	"mall/service/internal/utils/ctxs"
-	"mall/service/internal/utils/timelogger"
+	"simon/mall/service/internal/constant"
+	"simon/mall/service/internal/errs"
+	"simon/mall/service/internal/thirdparty/errortool"
+	"simon/mall/service/internal/utils/ctxs"
+	"simon/mall/service/internal/utils/timelogger"
 )
 
 const (

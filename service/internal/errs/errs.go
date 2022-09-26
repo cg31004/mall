@@ -1,6 +1,6 @@
 package errs
 
-import "mall/service/internal/thirdparty/errortool"
+import "simon/mall/service/internal/thirdparty/errortool"
 
 var (
 	ConvertDB = errortool.ConvertDB

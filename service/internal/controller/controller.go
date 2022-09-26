@@ -4,12 +4,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/dig"
 
-	"mall/service/internal/controller/handler"
-	"mall/service/internal/controller/middleware"
-	"mall/service/internal/core/usecase/chart"
-	"mall/service/internal/core/usecase/product"
-	"mall/service/internal/core/usecase/session"
-	"mall/service/internal/thirdparty/logger"
+	"simon/mall/service/internal/controller/handler"
+	"simon/mall/service/internal/controller/middleware"
+	"simon/mall/service/internal/core/usecase/chart"
+	"simon/mall/service/internal/core/usecase/order"
+	"simon/mall/service/internal/core/usecase/product"
+	"simon/mall/service/internal/core/usecase/session"
+	"simon/mall/service/internal/thirdparty/logger"
 )
 
 func NewController(in digIn) digOut {
@@ -18,6 +19,7 @@ func NewController(in digIn) digOut {
 		digOut: digOut{
 			MemberCtrl:  newMember(in),
 			ProductCtrl: newProduct(in),
+			OrderCtrl:   newOrder(in),
 		},
 	}
 
@@ -39,6 +41,7 @@ type digIn struct {
 
 	MemberIn  memberUseCaseIn
 	ProductIn productUseCaseIn
+	OrderIn   orderUseCaseIn
 }
 
 type digOut struct {
@@ -46,6 +49,7 @@ type digOut struct {
 
 	MemberCtrl  IMemberCtrl
 	ProductCtrl IProductCtrl
+	OrderCtrl   IOrderCtrl
 }
 
 type memberUseCaseIn struct {
@@ -54,10 +58,17 @@ type memberUseCaseIn struct {
 	Session session.ISessionUseCase
 	Chart   chart.IMemberChartUseCase
 }
+
 type productUseCaseIn struct {
 	dig.In
 
 	Product product.IProductUseCase
+}
+
+type orderUseCaseIn struct {
+	dig.In
+
+	Order order.IOrderUseCase
 }
 
 type response struct{}

@@ -1,18 +1,19 @@
-package chart
+package order
 
 import (
 	"go.uber.org/dig"
 
 	"simon/mall/service/internal/core/common/product"
+	"simon/mall/service/internal/core/common/transaction"
 	"simon/mall/service/internal/repository"
 	"simon/mall/service/internal/thirdparty/mysqlcli"
 )
 
-func NewChart(in digIn) digOut {
+func NewOrder(in digIn) digOut {
 	self := &packet{
 		in: in,
 		digOut: digOut{
-			MemberChartUseCase: newMemberChartUseCase(in),
+			OrderUseCase: newOrderUseCase(in),
 		},
 	}
 
@@ -25,16 +26,19 @@ type digIn struct {
 	DB mysqlcli.IMySQLClient
 
 	// Common
+	TxnItemCommon transaction.ITxnItemCommon
 	ProductCommon product.IProductCommon
 
 	// Repo
 	MemberChartRepo repository.IMemberChartRepo
+	TxnRepo         repository.ITxnRepo
+	TxnItemRepo     repository.ITxnItemRepo
 }
 
 type digOut struct {
 	dig.Out
 
-	MemberChartUseCase IMemberChartUseCase
+	OrderUseCase IOrderUseCase
 }
 
 type packet struct {

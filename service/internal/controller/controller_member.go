@@ -6,12 +6,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
 
-	"mall/service/internal/controller/middleware"
-	"mall/service/internal/errs"
-	"mall/service/internal/model/bo"
-	"mall/service/internal/model/dto"
-	"mall/service/internal/utils/ctxs"
-	"mall/service/internal/utils/timelogger"
+	"simon/mall/service/internal/controller/middleware"
+	"simon/mall/service/internal/errs"
+	"simon/mall/service/internal/model/bo"
+	"simon/mall/service/internal/model/dto"
+	"simon/mall/service/internal/utils/ctxs"
+	"simon/mall/service/internal/utils/timelogger"
 )
 
 type IMemberCtrl interface {

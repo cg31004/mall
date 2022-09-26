@@ -6,9 +6,8 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"mall/service/internal/constant"
-	"mall/service/internal/model/po"
-	"mall/service/internal/utils/converter"
+	"simon/mall/service/internal/constant"
+	"simon/mall/service/internal/model/po"
 )
 
 //go:generate mockery --name ISessionRepo --structname MockSessionRepo --output mock_repository --outpkg mock_repository --filename mock_session.go --with-expecter
@@ -17,10 +16,10 @@ import (
 type ISessionRepo interface {
 	SetMemberLogin(ctx context.Context, session *po.MemberSession) error
 
-	CheckTokenExist(ctx context.Context, memberId int64) (bool, error)
+	CheckTokenExist(ctx context.Context, memberId string) (bool, error)
 	CheckSessionExist(ctx context.Context, token string) (bool, error)
 
-	GetTokenById(ctx context.Context, memberId int64) (string, error)
+	GetTokenById(ctx context.Context, memberId string) (string, error)
 	GetSessionByToken(ctx context.Context, token string) (*po.MemberSession, error)
 
 	RemoveUserLogin(ctx context.Context, token string) error
@@ -60,7 +59,7 @@ func (dao *sessionRepoByRedis) SetMemberLogin(ctx context.Context, session *po.M
 	return nil
 }
 
-func (dao *sessionRepoByRedis) CheckTokenExist(ctx context.Context, userId int64) (bool, error) {
+func (dao *sessionRepoByRedis) CheckTokenExist(ctx context.Context, userId string) (bool, error) {
 	_, ok := dao.in.LocalCache.Get(dao.keyByMemberId(userId))
 	if !ok {
 		return false, nil
@@ -76,7 +75,7 @@ func (dao *sessionRepoByRedis) CheckSessionExist(ctx context.Context, token stri
 	return true, nil
 }
 
-func (dao *sessionRepoByRedis) GetTokenById(ctx context.Context, memberId int64) (string, error) {
+func (dao *sessionRepoByRedis) GetTokenById(ctx context.Context, memberId string) (string, error) {
 	val, ok := dao.in.LocalCache.Get(dao.keyByMemberId(memberId))
 	if !ok {
 		return "", xerrors.New("not match data")
@@ -120,6 +119,6 @@ func (dao *sessionRepoByRedis) keyByToken(token string) string {
 	return constant.CacheSessionByToken + token
 }
 
-func (dao *sessionRepoByRedis) keyByMemberId(memberId int64) string {
-	return constant.CacheSessionByMemberId + converter.ConvertInt64ToStr(memberId)
+func (dao *sessionRepoByRedis) keyByMemberId(memberId string) string {
+	return constant.CacheSessionByMemberId + memberId
 }

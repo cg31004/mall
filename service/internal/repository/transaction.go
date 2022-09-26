@@ -6,10 +6,9 @@ import (
 	"golang.org/x/xerrors"
 	"gorm.io/gorm"
 
-	"mall/service/internal/errs"
-	"mall/service/internal/model/po"
-	"mall/service/internal/utils/converter"
-	"mall/service/internal/utils/timelogger"
+	"simon/mall/service/internal/errs"
+	"simon/mall/service/internal/model/po"
+	"simon/mall/service/internal/utils/timelogger"
 )
 
 //go:generate mockery --name ITxnRepo --structname MockTxnRepo --output mock_repository --outpkg mock_repository --filename mock_transaction.go --with-expecter
@@ -51,7 +50,7 @@ func (repo *txnRepo) GetList(ctx context.Context, db *gorm.DB, cond *po.Transact
 
 func (repo *txnRepo) listCond(cond *po.TransactionSearch) func(*gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
-		if len(converter.ConvertInt64ToStr(cond.MemberId)) > 0 {
+		if cond.MemberId != nil {
 			db = db.Where("`member_id` = ?", cond.MemberId)
 		}
 

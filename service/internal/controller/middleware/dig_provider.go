@@ -3,8 +3,8 @@ package middleware
 import (
 	"go.uber.org/dig"
 
-	"mall/service/internal/core/usecase/session"
-	"mall/service/internal/thirdparty/logger"
+	"simon/mall/service/internal/core/usecase/session"
+	"simon/mall/service/internal/thirdparty/logger"
 )
 
 func NewResponseMiddleware(in digIn) IResponseMiddleware {

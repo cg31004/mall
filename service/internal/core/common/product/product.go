@@ -5,14 +5,15 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"mall/service/internal/constant"
-	"mall/service/internal/model/bo"
-	"mall/service/internal/model/po"
-	"mall/service/internal/utils/timelogger"
+	"simon/mall/service/internal/constant"
+	"simon/mall/service/internal/model/bo"
+	"simon/mall/service/internal/model/po"
+	"simon/mall/service/internal/utils/timelogger"
 )
 
 type IProductCommon interface {
 	GetProduct(ctx context.Context) (map[string]*bo.ProductCommon, error)
+	DeleteProductCache(ctx context.Context)
 }
 
 func newProductCommon(in digIn) IProductCommon {
@@ -51,4 +52,8 @@ func (c *productCommon) GetProduct(ctx context.Context) (map[string]*bo.ProductC
 	c.in.Cache.Save(constant.CacheProduct, result)
 
 	return result, nil
+}
+
+func (c *productCommon) DeleteProductCache(ctx context.Context) {
+	c.in.Cache.Delete(constant.CacheProduct)
 }

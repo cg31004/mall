@@ -3,7 +3,7 @@ package po
 import (
 	"time"
 
-	"mall/service/internal/constant"
+	"simon/mall/service/internal/constant"
 )
 
 type Transaction struct {
@@ -21,7 +21,7 @@ func (Transaction) TableName() string {
 }
 
 type TransactionSearch struct {
-	MemberId int64
+	MemberId *string
 }
 
 //
@@ -32,9 +32,12 @@ type TransactionItem struct {
 	Amount        int                            `gorm:"column:"amount"`        //商品價格
 	Quantity      int                            `gorm:"column:"quantity"`      // 庫存
 	Image         string                         `gorm:"column:"image"`         // 圖片
-	Status        constant.TransactionStatusEnum `gorm:"column:"status"`        // 商品目前狀態
 }
 
 func (TransactionItem) TableName() string {
 	return "transaction_item"
+}
+
+type GetTxnItemListCond struct {
+	TxnId []string
 }

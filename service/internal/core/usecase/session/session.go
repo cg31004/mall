@@ -6,12 +6,12 @@ import (
 	"github.com/jinzhu/copier"
 	"golang.org/x/xerrors"
 
-	"mall/service/internal/errs"
-	"mall/service/internal/model/bo"
-	"mall/service/internal/model/po"
-	"mall/service/internal/utils/hash"
-	"mall/service/internal/utils/timelogger"
-	"mall/service/internal/utils/uuid"
+	"simon/mall/service/internal/errs"
+	"simon/mall/service/internal/model/bo"
+	"simon/mall/service/internal/model/po"
+	"simon/mall/service/internal/utils/hash"
+	"simon/mall/service/internal/utils/timelogger"
+	"simon/mall/service/internal/utils/uuid"
 )
 
 type ISessionUseCase interface {
@@ -82,6 +82,8 @@ func (uc *sessionUseCase) Logout(ctx context.Context, token *bo.MemberToken) err
 }
 
 func (uc *sessionUseCase) AuthMember(ctx context.Context, token *bo.MemberToken) (*bo.MemberSession, error) {
+	defer timelogger.LogTime(ctx)()
+
 	// check if token been login
 	exist, err := uc.in.SessionRepo.CheckSessionExist(ctx, token.Token)
 	if err != nil {

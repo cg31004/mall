@@ -1,6 +1,6 @@
 package bo
 
-import "mall/service/internal/constant"
+import "simon/mall/service/internal/constant"
 
 type ProductCommon struct {
 	Name   string

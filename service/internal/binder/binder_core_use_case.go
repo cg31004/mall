@@ -3,9 +3,10 @@ package binder
 import (
 	"go.uber.org/dig"
 
-	"mall/service/internal/core/usecase/chart"
-	"mall/service/internal/core/usecase/product"
-	"mall/service/internal/core/usecase/session"
+	"simon/mall/service/internal/core/usecase/chart"
+	"simon/mall/service/internal/core/usecase/order"
+	"simon/mall/service/internal/core/usecase/product"
+	"simon/mall/service/internal/core/usecase/session"
 )
 
 func provideCoreUseCase(binder *dig.Container) {
@@ -19,6 +20,10 @@ func provideCoreUseCase(binder *dig.Container) {
 	}
 
 	if err := binder.Provide(product.NewProduct); err != nil {
+		panic(err)
+	}
+
+	if err := binder.Provide(order.NewOrder); err != nil {
 		panic(err)
 	}
 

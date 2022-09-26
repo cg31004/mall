@@ -7,7 +7,7 @@ import (
 	"github.com/patrickmn/go-cache"
 	"go.uber.org/dig"
 
-	"mall/service/internal/config"
+	"simon/mall/service/internal/config"
 )
 
 var local *localCache

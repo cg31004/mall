@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"mall/service/internal/model/bo"
+	"simon/mall/service/internal/model/bo"
 )
 
 const (

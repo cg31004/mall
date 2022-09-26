@@ -9,8 +9,8 @@ import (
 	"github.com/gin-gonic/gin/binding"
 	"golang.org/x/xerrors"
 
-	"mall/service/internal/errs"
-	"mall/service/internal/model/dto"
+	"simon/mall/service/internal/errs"
+	"simon/mall/service/internal/model/dto"
 )
 
 type IRequestParse interface {

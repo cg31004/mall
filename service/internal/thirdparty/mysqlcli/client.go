@@ -4,8 +4,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"go.uber.org/dig"
 
-	"mall/service/internal/config"
-	"mall/service/internal/thirdparty/logger"
+	"simon/mall/service/internal/config"
+	"simon/mall/service/internal/thirdparty/logger"
 )
 
 func NewDBClient(in digIn) IMySQLClient {
