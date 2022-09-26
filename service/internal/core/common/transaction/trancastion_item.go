@@ -11,6 +11,8 @@ import (
 	"simon/mall/service/internal/utils/timelogger"
 )
 
+//go:generate mockery --name ITxnItemCommon --structname MockTxnItemCommon --output mock_common_txn --outpkg mock_common_txn --filename mock_txn_item.go --with-expecter
+
 type ITxnItemCommon interface {
 	GetTxnItem(ctx context.Context, cond *bo.GetTxnItemMapCond) (map[string][]*bo.OrderItem, error)
 }

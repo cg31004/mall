@@ -11,6 +11,8 @@ import (
 	"simon/mall/service/internal/utils/timelogger"
 )
 
+//go:generate mockery --name IProductCommon --structname MockProductCommon --output mock_common_product --outpkg mock_common_product --filename mock_product.go --with-expecter
+
 type IProductCommon interface {
 	GetProduct(ctx context.Context) (map[string]*bo.ProductCommon, error)
 	DeleteProductCache(ctx context.Context)

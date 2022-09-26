@@ -11,7 +11,7 @@ import (
 	"simon/mall/service/internal/utils/timelogger"
 )
 
-//go:generate mockery --name IPaymentRepo --structname MockPaymentRepo --output mock_repository --outpkg mock_repository --filename mock_payment.go --with-expecter
+//go:generate mockery --name IProductRepo --structname MockPaymentRepo --output mock_repository --outpkg mock_repository --filename mock_product.go --with-expecter
 
 type IProductRepo interface {
 	First(ctx context.Context, db *gorm.DB, id string) (*po.Product, error)

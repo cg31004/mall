@@ -27,7 +27,6 @@ type IAppConfig interface {
 	GetGinConfig() GinConfig
 	GetMySQLConfig() MySQLConfig
 	GetLocalCacheConfig() LocalCacheConfig
-	GetRedisConfig() RedisConfig
 }
 
 type AppConfigSetup struct {
@@ -84,8 +83,4 @@ func (c *AppConfigSetup) GetMySQLConfig() MySQLConfig {
 
 func (c *AppConfigSetup) GetLocalCacheConfig() LocalCacheConfig {
 	return c.AppConfig.LocalCacheConfig
-}
-
-func (c *AppConfigSetup) GetRedisConfig() RedisConfig {
-	return c.AppConfig.RedisConfig
 }
