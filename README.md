@@ -2,7 +2,7 @@
 
 ## 專案起始點
 
-- ./cmd/main.go
+- ./cmd/main.go or ./main
 
 ## 容器啟動文件
 
