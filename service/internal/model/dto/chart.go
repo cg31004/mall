@@ -1,11 +1,12 @@
 package dto
 
 type MemberChart struct {
-	Id       string `json:"id"`
-	Name     string `json:"name"`     // product name
-	Amount   int    `json:"amount"`   // 價格
-	Quantity int    `json:"quantity"` //數量
-	Image    string `json:"image"`    // 圖片
+	Id        string `json:"id"`
+	Name      string `json:"name"`      // product name
+	Amount    int    `json:"amount"`    // 價格
+	Quantity  int    `json:"quantity"`  // 數量
+	Image     string `json:"image"`     // 圖片
+	Inventory string `json:"inventory"` // 庫存
 }
 
 type MemberChartUpdateCond struct {

@@ -52,5 +52,6 @@ var (
 )
 
 var (
-	chartGroup = errortool.Codes.Group("06")
+	orderGroup          = errortool.Codes.Group("06")
+	OrderProductNoMatch = orderGroup.Error("001", "商品已下架或沒有庫存，請更新訂單")
 )

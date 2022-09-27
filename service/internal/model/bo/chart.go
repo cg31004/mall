@@ -1,11 +1,12 @@
 package bo
 
 type MemberChart struct {
-	Id       string
-	Name     string
-	Amount   int
-	Quantity int
-	Image    string
+	Id        string
+	Name      string
+	Amount    int
+	Quantity  int
+	Image     string
+	Inventory int
 }
 
 type MemberChartUpdateCond struct {
@@ -14,8 +15,8 @@ type MemberChartUpdateCond struct {
 }
 
 type MemberChartCreateCond struct {
-	ProductId    string
-	Quantity     int
+	ProductId string
+	Quantity  int
 }
 
 type MemberChartDelCond struct {

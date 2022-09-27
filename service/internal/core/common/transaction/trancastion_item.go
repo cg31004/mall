@@ -15,6 +15,7 @@ import (
 
 type ITxnItemCommon interface {
 	GetTxnItem(ctx context.Context, cond *bo.GetTxnItemMapCond) (map[string][]*bo.OrderItem, error)
+	DeleteTxnItem(ctx context.Context, cond *bo.DelTxnItemMapCond)
 }
 
 func newTxnItemCommon(in digIn) ITxnItemCommon {
@@ -60,4 +61,8 @@ func (c *txnItemCommon) GetTxnItem(ctx context.Context, cond *bo.GetTxnItemMapCo
 	c.in.Cache.Save(constant.Cache_MemberTxnItem+cond.MemberId, result)
 
 	return result, nil
+}
+
+func (c *txnItemCommon) DeleteTxnItem(ctx context.Context, cond *bo.DelTxnItemMapCond) {
+	c.in.Cache.Delete(constant.Cache_MemberTxnItem + cond.MemberId)
 }

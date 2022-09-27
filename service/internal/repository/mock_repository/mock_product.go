@@ -124,55 +124,6 @@ func (_c *MockPaymentRepo_GetList_Call) Return(_a0 []*po.Product, _a1 error) *Mo
 	return _c
 }
 
-// GetListPager provides a mock function with given fields: ctx, db, cond, pager
-func (_m *MockPaymentRepo) GetListPager(ctx context.Context, db *gorm.DB, cond *po.ProductSearch, pager *po.Pager) (*po.PagingResult, error) {
-	ret := _m.Called(ctx, db, cond, pager)
-
-	var r0 *po.PagingResult
-	if rf, ok := ret.Get(0).(func(context.Context, *gorm.DB, *po.ProductSearch, *po.Pager) *po.PagingResult); ok {
-		r0 = rf(ctx, db, cond, pager)
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*po.PagingResult)
-		}
-	}
-
-	var r1 error
-	if rf, ok := ret.Get(1).(func(context.Context, *gorm.DB, *po.ProductSearch, *po.Pager) error); ok {
-		r1 = rf(ctx, db, cond, pager)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
-// MockPaymentRepo_GetListPager_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetListPager'
-type MockPaymentRepo_GetListPager_Call struct {
-	*mock.Call
-}
-
-// GetListPager is a helper method to define mock.On call
-//  - ctx context.Context
-//  - db *gorm.DB
-//  - cond *po.ProductSearch
-//  - pager *po.Pager
-func (_e *MockPaymentRepo_Expecter) GetListPager(ctx interface{}, db interface{}, cond interface{}, pager interface{}) *MockPaymentRepo_GetListPager_Call {
-	return &MockPaymentRepo_GetListPager_Call{Call: _e.mock.On("GetListPager", ctx, db, cond, pager)}
-}
-
-func (_c *MockPaymentRepo_GetListPager_Call) Run(run func(ctx context.Context, db *gorm.DB, cond *po.ProductSearch, pager *po.Pager)) *MockPaymentRepo_GetListPager_Call {
-	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*gorm.DB), args[2].(*po.ProductSearch), args[3].(*po.Pager))
-	})
-	return _c
-}
-
-func (_c *MockPaymentRepo_GetListPager_Call) Return(_a0 *po.PagingResult, _a1 error) *MockPaymentRepo_GetListPager_Call {
-	_c.Call.Return(_a0, _a1)
-	return _c
-}
-
 // NewMockPaymentRepo creates a new instance of MockPaymentRepo. It also registers the testing.TB interface on the mock and a cleanup function to assert the mocks expectations.
 func NewMockPaymentRepo(t testing.TB) *MockPaymentRepo {
 	mock := &MockPaymentRepo{}

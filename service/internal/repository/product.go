@@ -16,7 +16,8 @@ import (
 type IProductRepo interface {
 	First(ctx context.Context, db *gorm.DB, id string) (*po.Product, error)
 	GetList(ctx context.Context, db *gorm.DB, cond *po.ProductSearch, pager *po.Pager) ([]*po.Product, error)
-	GetListPager(ctx context.Context, db *gorm.DB, cond *po.ProductSearch, pager *po.Pager) (*po.PagingResult, error)
+	// todo: 產品功能:頁面
+	//GetListPager(ctx context.Context, db *gorm.DB, cond *po.ProductSearch, pager *po.Pager) (*po.PagingResult, error)
 }
 
 type productRepo struct {
@@ -54,28 +55,28 @@ func (repo *productRepo) GetList(ctx context.Context, db *gorm.DB, cond *po.Prod
 	return products, nil
 }
 
-func (repo *productRepo) GetListPager(ctx context.Context, db *gorm.DB, cond *po.ProductSearch, pager *po.Pager) (*po.PagingResult, error) {
-	defer timelogger.LogTime(ctx)()
-
-	var count int64
-	if err := db.
-		Scopes(repo.productListCond(cond, nil)).
-		Count(&count).
-		Error; err != nil {
-		return nil, xerrors.Errorf("%w", errs.ConvertDB(err))
-	}
-
-	return po.NewPagerResult(pager, count), nil
-}
+// todo: 產品功能:頁面
+//func (repo *productRepo) GetListPager(ctx context.Context, db *gorm.DB, cond *po.ProductSearch, pager *po.Pager) (*po.PagingResult, error) {
+//	defer timelogger.LogTime(ctx)()
+//
+//	var count int64
+//	if err := db.
+//		Scopes(repo.productListCond(cond, nil)).
+//		Count(&count).
+//		Error; err != nil {
+//		return nil, xerrors.Errorf("%w", errs.ConvertDB(err))
+//	}
+//
+//	return po.NewPagerResult(pager, count), nil
+//}
 
 func (repo *productRepo) productListCond(cond *po.ProductSearch, pager *po.Pager) func(*gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		db = db.Model(&po.Product{})
 
 		if cond != nil {
-			if cond.Name != nil {
-				likeStr := "%" + *cond.Name + "%"
-				db = db.Where("`name` like ?", likeStr)
+			if cond.Status != nil {
+				db = db.Where("`status` = ?", cond.Status)
 			}
 		}
 

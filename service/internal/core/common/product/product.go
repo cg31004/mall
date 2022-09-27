@@ -46,8 +46,14 @@ func (c *productCommon) GetProduct(ctx context.Context) (map[string]*bo.ProductC
 	result := make(map[string]*bo.ProductCommon, len(product))
 	for _, val := range product {
 		result[val.Id] = &bo.ProductCommon{
-			Name:  val.Name,
-			Image: val.Image,
+			Name:      val.Name,
+			Image:     val.Image,
+			Inventory: val.Inventory,
+		}
+		if val.Inventory < 1 {
+			result[val.Id].Status = constant.ProductStatusEnum_Closed
+		} else {
+			result[val.Id].Status = val.Status
 		}
 	}
 

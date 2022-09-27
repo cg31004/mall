@@ -23,78 +23,6 @@ func (_m *MockOpsConfig) EXPECT() *MockOpsConfig_Expecter {
 	return &MockOpsConfig_Expecter{mock: &_m.Mock}
 }
 
-// GetFileServerConfig provides a mock function with given fields:
-func (_m *MockOpsConfig) GetFileServerConfig() config.FileServerConfig {
-	ret := _m.Called()
-
-	var r0 config.FileServerConfig
-	if rf, ok := ret.Get(0).(func() config.FileServerConfig); ok {
-		r0 = rf()
-	} else {
-		r0 = ret.Get(0).(config.FileServerConfig)
-	}
-
-	return r0
-}
-
-// MockOpsConfig_GetFileServerConfig_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetFileServerConfig'
-type MockOpsConfig_GetFileServerConfig_Call struct {
-	*mock.Call
-}
-
-// GetFileServerConfig is a helper method to define mock.On call
-func (_e *MockOpsConfig_Expecter) GetFileServerConfig() *MockOpsConfig_GetFileServerConfig_Call {
-	return &MockOpsConfig_GetFileServerConfig_Call{Call: _e.mock.On("GetFileServerConfig")}
-}
-
-func (_c *MockOpsConfig_GetFileServerConfig_Call) Run(run func()) *MockOpsConfig_GetFileServerConfig_Call {
-	_c.Call.Run(func(args mock.Arguments) {
-		run()
-	})
-	return _c
-}
-
-func (_c *MockOpsConfig_GetFileServerConfig_Call) Return(_a0 config.FileServerConfig) *MockOpsConfig_GetFileServerConfig_Call {
-	_c.Call.Return(_a0)
-	return _c
-}
-
-// GetMongoServiceConfig provides a mock function with given fields:
-func (_m *MockOpsConfig) GetMongoServiceConfig() config.MongoServiceConfig {
-	ret := _m.Called()
-
-	var r0 config.MongoServiceConfig
-	if rf, ok := ret.Get(0).(func() config.MongoServiceConfig); ok {
-		r0 = rf()
-	} else {
-		r0 = ret.Get(0).(config.MongoServiceConfig)
-	}
-
-	return r0
-}
-
-// MockOpsConfig_GetMongoServiceConfig_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetMongoServiceConfig'
-type MockOpsConfig_GetMongoServiceConfig_Call struct {
-	*mock.Call
-}
-
-// GetMongoServiceConfig is a helper method to define mock.On call
-func (_e *MockOpsConfig_Expecter) GetMongoServiceConfig() *MockOpsConfig_GetMongoServiceConfig_Call {
-	return &MockOpsConfig_GetMongoServiceConfig_Call{Call: _e.mock.On("GetMongoServiceConfig")}
-}
-
-func (_c *MockOpsConfig_GetMongoServiceConfig_Call) Run(run func()) *MockOpsConfig_GetMongoServiceConfig_Call {
-	_c.Call.Run(func(args mock.Arguments) {
-		run()
-	})
-	return _c
-}
-
-func (_c *MockOpsConfig_GetMongoServiceConfig_Call) Return(_a0 config.MongoServiceConfig) *MockOpsConfig_GetMongoServiceConfig_Call {
-	_c.Call.Return(_a0)
-	return _c
-}
-
 // GetMySQLServiceConfig provides a mock function with given fields:
 func (_m *MockOpsConfig) GetMySQLServiceConfig() config.MySQLServiceConfig {
 	ret := _m.Called()
@@ -127,42 +55,6 @@ func (_c *MockOpsConfig_GetMySQLServiceConfig_Call) Run(run func()) *MockOpsConf
 }
 
 func (_c *MockOpsConfig_GetMySQLServiceConfig_Call) Return(_a0 config.MySQLServiceConfig) *MockOpsConfig_GetMySQLServiceConfig_Call {
-	_c.Call.Return(_a0)
-	return _c
-}
-
-// GetRedisServiceConfig provides a mock function with given fields:
-func (_m *MockOpsConfig) GetRedisServiceConfig() config.RedisServiceConfig {
-	ret := _m.Called()
-
-	var r0 config.RedisServiceConfig
-	if rf, ok := ret.Get(0).(func() config.RedisServiceConfig); ok {
-		r0 = rf()
-	} else {
-		r0 = ret.Get(0).(config.RedisServiceConfig)
-	}
-
-	return r0
-}
-
-// MockOpsConfig_GetRedisServiceConfig_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetRedisServiceConfig'
-type MockOpsConfig_GetRedisServiceConfig_Call struct {
-	*mock.Call
-}
-
-// GetRedisServiceConfig is a helper method to define mock.On call
-func (_e *MockOpsConfig_Expecter) GetRedisServiceConfig() *MockOpsConfig_GetRedisServiceConfig_Call {
-	return &MockOpsConfig_GetRedisServiceConfig_Call{Call: _e.mock.On("GetRedisServiceConfig")}
-}
-
-func (_c *MockOpsConfig_GetRedisServiceConfig_Call) Run(run func()) *MockOpsConfig_GetRedisServiceConfig_Call {
-	_c.Call.Run(func(args mock.Arguments) {
-		run()
-	})
-	return _c
-}
-
-func (_c *MockOpsConfig_GetRedisServiceConfig_Call) Return(_a0 config.RedisServiceConfig) *MockOpsConfig_GetRedisServiceConfig_Call {
 	_c.Call.Return(_a0)
 	return _c
 }

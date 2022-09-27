@@ -22,6 +22,10 @@ type GetTxnItemMapCond struct {
 	TxnId    []string
 }
 
+type DelTxnItemMapCond struct {
+	MemberId string
+}
+
 type CreateOrderCond struct {
 	PaymentNumber string
 }

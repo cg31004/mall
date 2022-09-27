@@ -42,6 +42,9 @@ func (uc *orderUseCase) CreateOrder(ctx context.Context, cond *bo.CreateOrderCon
 
 	uc.orderLock.Lock()
 	defer uc.orderLock.Unlock()
+	// refresh product quantity
+	defer uc.in.ProductCommon.DeleteProductCache(ctx)
+	defer uc.in.TxnItemCommon.DeleteTxnItem(ctx, &bo.DelTxnItemMapCond{MemberId: memberInfo.Id})
 
 	db := uc.in.DB.Session()
 	// 取得個人購物車
@@ -63,6 +66,11 @@ func (uc *orderUseCase) CreateOrder(ctx context.Context, cond *bo.CreateOrderCon
 		// txnItem
 		poItem := make([]*po.TransactionItem, len(chart))
 		for _, c := range chart {
+			// 商品已下架或沒有庫存
+			if val, ok := products[c.ProductId]; !ok || val.Inventory < c.Quantity || val.Status != constant.ProductStatusEnum_Open {
+				return xerrors.Errorf("orderUseCase.CreateOrder -> ProductCommon.GetProduct: %w ", errs.OrderProductNoMatch)
+			}
+
 			item := &po.TransactionItem{
 				TransactionId: transactionId,
 				Name:          products[c.ProductId].Name,
@@ -96,9 +104,6 @@ func (uc *orderUseCase) CreateOrder(ctx context.Context, cond *bo.CreateOrderCon
 	if err := db.Transaction(txn); err != nil {
 		return xerrors.Errorf("sb *syncBankUseCase -> db.Transaction: %w", err)
 	}
-
-	// refresh product quantity
-	uc.in.ProductCommon.DeleteProductCache(ctx)
 
 	return nil
 }

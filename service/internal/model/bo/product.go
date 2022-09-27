@@ -3,9 +3,11 @@ package bo
 import "simon/mall/service/internal/constant"
 
 type ProductCommon struct {
-	Name   string
-	Image  string
-	Amount int
+	Name      string
+	Image     string
+	Amount    int
+	Inventory int
+	Status    constant.ProductStatusEnum
 }
 
 type GetProductListCond struct {

@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `product` (
     `id` CHAR(36) NOT NULL COMMENT 'PK',
     `name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '產品名稱',
     `amount` INT NOT NULL  DEFAULT 0 COMMENT '產品價格',
-    `quantity` INT NOT NULL COMMENT '數量',
+    `inventory` INT NOT NULL COMMENT '庫存',
     `image` VARCHAR(255) NOT NULL COMMENT '圖片路徑',
     `status` TINYINT NOT NULL COMMENT '狀態 0： "無庫存 1 ：尚有庫存',
     `created_at` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '建立時間',
