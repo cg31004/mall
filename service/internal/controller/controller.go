@@ -17,9 +17,9 @@ func NewController(in digIn) digOut {
 	self := &packet{
 		in: in,
 		digOut: digOut{
+			OrderCtrl:   newOrder(in),
 			MemberCtrl:  newMember(in),
 			ProductCtrl: newProduct(in),
-			OrderCtrl:   newOrder(in),
 		},
 	}
 
@@ -40,16 +40,16 @@ type digIn struct {
 	SetResponse response `optional:"true"`
 
 	MemberIn  memberUseCaseIn
-	ProductIn productUseCaseIn
 	OrderIn   orderUseCaseIn
+	ProductIn productUseCaseIn
 }
 
 type digOut struct {
 	dig.Out
 
 	MemberCtrl  IMemberCtrl
-	ProductCtrl IProductCtrl
 	OrderCtrl   IOrderCtrl
+	ProductCtrl IProductCtrl
 }
 
 type memberUseCaseIn struct {

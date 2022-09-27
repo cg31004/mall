@@ -39,8 +39,8 @@ type restServiceIn struct {
 
 	//web api
 	MemberCtrl  controller.IMemberCtrl
-	ProductCtrl controller.IProductCtrl
 	OrderCtrl   controller.IOrderCtrl
+	ProductCtrl controller.IProductCtrl
 
 	ResponseMiddleware   middleware.IResponseMiddleware
 	MemberAuthMiddleware middleware.IMemberAuthMiddleware

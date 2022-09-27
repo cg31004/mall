@@ -6,7 +6,6 @@ type AppConfig struct {
 	GinConfig        GinConfig        `mapstructure:"gin_config"`
 	MySQLConfig      MySQLConfig      `mapstructure:"mysql_config"`
 	LocalCacheConfig LocalCacheConfig `mapstructure:"local_cache_config"`
-	RedisConfig      RedisConfig      `mapstructure:"redis_config"`
 }
 
 type LogConfig struct {
@@ -34,8 +33,5 @@ type MySQLConfig struct {
 
 type LocalCacheConfig struct {
 	DefaultExpirationSec int `mapstructure:"default_expiration_sec"`
-}
-
-type RedisConfig struct {
 	SessionExpirationSec int `mapstructure:"session_expiration_sec"`
 }

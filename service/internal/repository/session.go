@@ -53,9 +53,9 @@ func (dao *sessionRepoByRedis) SetMemberLogin(ctx context.Context, session *po.M
 	}
 
 	// uid -> token
-	dao.in.LocalCache.SaveWithExpiration(dao.keyByMemberId(session.Id), session.Token, time.Duration(dao.in.AppConf.GetRedisConfig().SessionExpirationSec)*time.Second)
+	dao.in.LocalCache.SaveWithExpiration(dao.keyByMemberId(session.Id), session.Token, time.Duration(dao.in.AppConf.GetLocalCacheConfig().SessionExpirationSec)*time.Second)
 	// token -> session(name id account ...
-	dao.in.LocalCache.SaveWithExpiration(dao.keyByToken(session.Token), session, time.Duration(dao.in.AppConf.GetRedisConfig().SessionExpirationSec)*time.Second)
+	dao.in.LocalCache.SaveWithExpiration(dao.keyByToken(session.Token), session, time.Duration(dao.in.AppConf.GetLocalCacheConfig().SessionExpirationSec)*time.Second)
 	return nil
 }
 
@@ -116,9 +116,9 @@ func (dao *sessionRepoByRedis) RemoveUserLogin(ctx context.Context, token string
 }
 
 func (dao *sessionRepoByRedis) keyByToken(token string) string {
-	return constant.CacheSessionByToken + token
+	return constant.Cache_SessionByToken + token
 }
 
 func (dao *sessionRepoByRedis) keyByMemberId(memberId string) string {
-	return constant.CacheSessionByMemberId + memberId
+	return constant.Cache_SessionByMemberId + memberId
 }

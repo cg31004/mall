@@ -6,6 +6,7 @@ import (
 	"simon/mall/service/internal/core/common/product"
 	"simon/mall/service/internal/repository"
 	"simon/mall/service/internal/thirdparty/mysqlcli"
+	"simon/mall/service/internal/utils/uuid"
 )
 
 func NewChart(in digIn) digOut {
@@ -22,7 +23,8 @@ func NewChart(in digIn) digOut {
 type digIn struct {
 	dig.In
 	// 套件
-	DB mysqlcli.IMySQLClient
+	DB   mysqlcli.IMySQLClient
+	Uuid uuid.IUuid
 
 	// Common
 	ProductCommon product.IProductCommon

@@ -1,5 +1,6 @@
 package product
 
+// todo: 產品功能
 import (
 	"context"
 
@@ -41,15 +42,15 @@ func (uc *productUseCase) GetProduct(ctx context.Context, cond *bo.GetProductCon
 	}
 
 	result := &bo.Product{
-		Id:       product.Id,
-		Name:     product.Name,
-		Image:    product.Image,
-		Amount:   product.Amount,
-		Quantity: product.Quantity,
-		Status:   product.Status,
+		Id:        product.Id,
+		Name:      product.Name,
+		Image:     product.Image,
+		Amount:    product.Amount,
+		Inventory: product.Inventory,
+		Status:    product.Status,
 	}
 	// 無庫存更改狀態
-	if result.Quantity < 1 {
+	if result.Inventory < 1 {
 		result.Status = constant.ProductStatusEnum_Closed
 	}
 
@@ -92,15 +93,15 @@ func (uc *productUseCase) GetProductList(ctx context.Context, cond *bo.GetProduc
 	result := make([]*bo.Product, 0, len(products))
 	for _, product := range products {
 		boP := &bo.Product{
-			Id:       product.Id,
-			Name:     product.Name,
-			Image:    product.Image,
-			Amount:   product.Amount,
-			Quantity: product.Quantity,
-			Status:   product.Status,
+			Id:        product.Id,
+			Name:      product.Name,
+			Image:     product.Image,
+			Amount:    product.Amount,
+			Inventory: product.Inventory,
+			Status:    product.Status,
 		}
 		// 無庫存更改狀態
-		if product.Quantity < 1 {
+		if product.Inventory < 1 {
 			boP.Status = constant.ProductStatusEnum_Closed
 		}
 

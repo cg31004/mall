@@ -12,6 +12,7 @@ import (
 	"simon/mall/service/internal/utils/timelogger"
 )
 
+// todo: 產品控制
 type IProductCtrl interface {
 	Get(ctx *gin.Context)
 	GetList(ctx *gin.Context)

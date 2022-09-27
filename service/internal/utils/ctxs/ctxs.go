@@ -13,17 +13,6 @@ const (
 	HEADER_CLIENT_IP = "Header_Client_IP"
 )
 
-func GetClientIP(ctx context.Context) string {
-	val := ctx.Value(HEADER_CLIENT_IP)
-
-	v, ok := val.(string)
-	if !ok {
-		return ""
-	}
-
-	return v
-}
-
 func SetSession(ctx *gin.Context, session *bo.MemberSession) {
 	ctx.Set(USER_SESSION_KEY, session)
 }

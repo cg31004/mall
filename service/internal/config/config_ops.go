@@ -22,16 +22,8 @@ func newOpsConfig() IOpsConfig {
 	return obj
 }
 
-
-func NewMockOpsConfig() IOpsConfig {
-	return &OpsConfigSetup{}
-}
-
 type IOpsConfig interface {
 	GetMySQLServiceConfig() MySQLServiceConfig
-	GetRedisServiceConfig() RedisServiceConfig
-	GetMongoServiceConfig() MongoServiceConfig
-	GetFileServerConfig() FileServerConfig
 }
 
 type OpsConfigSetup struct {
@@ -82,16 +74,4 @@ func (c *OpsConfigSetup) loadYaml() {
 
 func (c *OpsConfigSetup) GetMySQLServiceConfig() MySQLServiceConfig {
 	return c.OpsConfig.MySQLServiceConfig
-}
-
-func (c *OpsConfigSetup) GetRedisServiceConfig() RedisServiceConfig {
-	return c.OpsConfig.RedisServiceConfig
-}
-
-func (c *OpsConfigSetup) GetMongoServiceConfig() MongoServiceConfig {
-	return c.OpsConfig.MongoServiceConfig
-}
-
-func (c *OpsConfigSetup) GetFileServerConfig() FileServerConfig {
-	return c.OpsConfig.FileServerConfig
 }

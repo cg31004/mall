@@ -19,12 +19,11 @@ func provideCoreUseCase(binder *dig.Container) {
 		panic(err)
 	}
 
-	if err := binder.Provide(product.NewProduct); err != nil {
-		panic(err)
-	}
-
 	if err := binder.Provide(order.NewOrder); err != nil {
 		panic(err)
 	}
 
+	if err := binder.Provide(product.NewProduct); err != nil {
+		panic(err)
+	}
 }
