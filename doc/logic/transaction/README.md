@@ -3,6 +3,9 @@
 ## 資料關聯
 
 ![](./db_relation.png)
+
+[schema](../../../doc/db/DDL/ddl.sql)
+
 [dbDiagram](https://dbdiagram.io/d/6332f1087b3d2034ffc9b338)
 
 ## API 介紹
