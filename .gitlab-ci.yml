@@ -1,0 +1,34 @@
+image: docker:19
+
+stages:
+  - create_image
+
+create_image_job:
+  stage: create_image
+  only:
+    - master
+    - develop
+    - tags
+  tags:
+    - docker
+  script:
+    - appname=mall
+    - |
+        docker build . -f Dockerfile \
+        -t $appname:$CI_COMMIT_REF_NAME \
+        --build-arg buildVersion=$CI_COMMIT_REF_NAME \
+        --build-arg buildCommitID=$CI_COMMIT_SHA
+    - docker push $appname:$CI_COMMIT_REF_NAME
+    - docker image rm $appname:$CI_COMMIT_REF_NAME
+
+test-job:
+  stage: test
+  tags:
+    - develop
+  script:
+     FIXME core admin unit test
+        - go test ./...
+
+
+
+

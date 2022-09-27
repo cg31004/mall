@@ -54,15 +54,15 @@ func (_c *MockTxnItemCommon_DeleteTxnItem_Call) Return() *MockTxnItemCommon_Dele
 }
 
 // GetTxnItem provides a mock function with given fields: ctx, cond
-func (_m *MockTxnItemCommon) GetTxnItem(ctx context.Context, cond *bo.GetTxnItemMapCond) (map[string][]*bo.OrderItem, error) {
+func (_m *MockTxnItemCommon) GetTxnItem(ctx context.Context, cond *bo.GetTxnItemMapCond) (map[string][]*bo.TxnItem, error) {
 	ret := _m.Called(ctx, cond)
 
-	var r0 map[string][]*bo.OrderItem
-	if rf, ok := ret.Get(0).(func(context.Context, *bo.GetTxnItemMapCond) map[string][]*bo.OrderItem); ok {
+	var r0 map[string][]*bo.TxnItem
+	if rf, ok := ret.Get(0).(func(context.Context, *bo.GetTxnItemMapCond) map[string][]*bo.TxnItem); ok {
 		r0 = rf(ctx, cond)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(map[string][]*bo.OrderItem)
+			r0 = ret.Get(0).(map[string][]*bo.TxnItem)
 		}
 	}
 
@@ -95,7 +95,7 @@ func (_c *MockTxnItemCommon_GetTxnItem_Call) Run(run func(ctx context.Context, c
 	return _c
 }
 
-func (_c *MockTxnItemCommon_GetTxnItem_Call) Return(_a0 map[string][]*bo.OrderItem, _a1 error) *MockTxnItemCommon_GetTxnItem_Call {
+func (_c *MockTxnItemCommon_GetTxnItem_Call) Return(_a0 map[string][]*bo.TxnItem, _a1 error) *MockTxnItemCommon_GetTxnItem_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }

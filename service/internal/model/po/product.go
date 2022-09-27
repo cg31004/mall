@@ -23,5 +23,6 @@ func (Product) TableName() string {
 }
 
 type ProductSearch struct {
+	Name   *string // 模糊搜尋產品名稱
 	Status *constant.ProductStatusEnum
 }

@@ -1,4 +1,4 @@
-FROM img.paradise-soft.com.tw/pds-backend/golang:1.16.15-alpine3.15 AS go-builder
+FROM golang:1.16.15-alpine3.15 AS go-builder
 RUN apk add git
 # 走 go mod vendor 模式
 ENV CGO_ENABLED=0 GOFLAGS=-mod=vendor
@@ -15,13 +15,13 @@ ARG buildVersion
 ARG buildCommitID
 RUN go build -ldflags \
     " \
-    -X 'gitlab.geax.io/pdsbe/central-admin.BuildVersion=${buildVersion}' \
-    -X 'gitlab.geax.io/pdsbe/central-admin.BuildCommitID=${buildCommitID}' \
+    -X '{gitlab-repo}.BuildVersion=${buildVersion}' \
+    -X '{gitlab-repo}.BuildCommitID=${buildCommitID}' \
     " \
     -o mall /build/cmd/
 
 # 只複製執行時所需檔案，降低 image 大小
-FROM reg.paradise-soft.com.tw:5000/alpine:3.12
+FROM alpine:3.12
 RUN apk update && \
     apk upgrade && \
     apk add --no-cache ca-certificates

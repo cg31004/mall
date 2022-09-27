@@ -14,7 +14,7 @@ import (
 //go:generate mockery --name ITxnItemCommon --structname MockTxnItemCommon --output mock_common_txn --outpkg mock_common_txn --filename mock_txn_item.go --with-expecter
 
 type ITxnItemCommon interface {
-	GetTxnItem(ctx context.Context, cond *bo.GetTxnItemMapCond) (map[string][]*bo.OrderItem, error)
+	GetTxnItem(ctx context.Context, cond *bo.GetTxnItemMapCond) (map[string][]*bo.TxnItem, error)
 	DeleteTxnItem(ctx context.Context, cond *bo.DelTxnItemMapCond)
 }
 
@@ -27,11 +27,11 @@ type txnItemCommon struct {
 }
 
 // todo txnItem 更新，需要刷新
-func (c *txnItemCommon) GetTxnItem(ctx context.Context, cond *bo.GetTxnItemMapCond) (map[string][]*bo.OrderItem, error) {
+func (c *txnItemCommon) GetTxnItem(ctx context.Context, cond *bo.GetTxnItemMapCond) (map[string][]*bo.TxnItem, error) {
 	defer timelogger.LogTime(ctx)()
 
 	if cacheProduct, ok := c.in.Cache.Get(constant.Cache_MemberTxnItem + cond.MemberId); ok {
-		if temp, ok := cacheProduct.(map[string][]*bo.OrderItem); ok {
+		if temp, ok := cacheProduct.(map[string][]*bo.TxnItem); ok {
 			return temp, nil
 		}
 	}
@@ -43,16 +43,16 @@ func (c *txnItemCommon) GetTxnItem(ctx context.Context, cond *bo.GetTxnItemMapCo
 		return nil, xerrors.Errorf("productCommon.GetProduct -> ProductRepo.GetList: %w", err)
 	}
 
-	result := make(map[string][]*bo.OrderItem, len(txnItem))
+	result := make(map[string][]*bo.TxnItem, len(txnItem))
 	for _, val := range txnItem {
-		tempItem := &bo.OrderItem{
+		tempItem := &bo.TxnItem{
 			Name:     val.Name,
 			Amount:   val.Amount,
 			Quantity: val.Quantity,
 			Image:    val.Image,
 		}
 		if _, ok := result[val.TransactionId]; !ok {
-			result[val.TransactionId] = make([]*bo.OrderItem, 0)
+			result[val.TransactionId] = make([]*bo.TxnItem, 0)
 		}
 		result[val.TransactionId] = append(result[val.TransactionId], tempItem)
 	}

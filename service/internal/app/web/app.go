@@ -38,9 +38,9 @@ type restServiceIn struct {
 	AppLogger logger.ILogger `name:"appLogger"`
 
 	//web api
-	MemberCtrl controller.IMemberCtrl
-	OrderCtrl  controller.IOrderCtrl
-	//ProductCtrl controller.IProductCtrl
+	MemberCtrl  controller.IMemberCtrl
+	OrderCtrl   controller.IOrderCtrl
+	ProductCtrl controller.IProductCtrl
 
 	ResponseMiddleware   middleware.IResponseMiddleware
 	MemberAuthMiddleware middleware.IMemberAuthMiddleware

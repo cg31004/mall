@@ -5,6 +5,7 @@ import (
 
 	"simon/mall/service/internal/core/usecase/chart"
 	"simon/mall/service/internal/core/usecase/order"
+	"simon/mall/service/internal/core/usecase/product"
 	"simon/mall/service/internal/core/usecase/session"
 )
 
@@ -22,7 +23,7 @@ func provideCoreUseCase(binder *dig.Container) {
 		panic(err)
 	}
 
-	//if err := binder.Provide(product.NewProduct); err != nil {
-	//	panic(err)
-	//}
+	if err := binder.Provide(product.NewProduct); err != nil {
+		panic(err)
+	}
 }

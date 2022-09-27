@@ -269,13 +269,6 @@ func (s *chartSuit) Test_MemberChart_Get() {
 
 	//
 	s.SetupTest()
-	s.T().Log("get: list fail return error, check list parameter")
-	s.in.MemberChartRepo.(*mock_repository.MockMemberChartRepo).EXPECT().GetList(s.ctx, mock.Anything, &po.MemberChartSearch{MemberId: memberDefaultId}).Return(nil, errs.CommonUnknownError)
-	_, err = s.memberChartUseCase.GetMemberChart(s.ctx)
-	s.Assert().ErrorIs(errs.CommonUnknownError, err)
-
-	//
-	s.SetupTest()
 	s.T().Log("get: prodcut common fail return error, check list parameter")
 	s.in.MemberChartRepo.(*mock_repository.MockMemberChartRepo).EXPECT().GetList(s.ctx, mock.Anything, mock.Anything).Return(nil, nil)
 	s.in.ProductCommon.(*mock_common_product.MockProductCommon).EXPECT().GetProduct(s.ctx).Return(nil, errs.CommonUnknownError)

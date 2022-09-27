@@ -53,6 +53,7 @@ func (s *sessionSuit) SetupTest() {
 	s.in.MemberRepo = mock_repository.NewMockMemberRepo(s.T())
 	s.in.SessionRepo = mock_repository.NewMockSessionRepo(s.T())
 }
+
 func (s *sessionSuit) Test_Session_Login() {
 	var err error
 	var cond *bo.MemberSessionCond
@@ -105,6 +106,7 @@ func (s *sessionSuit) Test_Session_Login() {
 	s.Assert().Equal(mockToken, token)
 
 }
+
 func (s *sessionSuit) Test_Session_Logout() {
 	var err error
 

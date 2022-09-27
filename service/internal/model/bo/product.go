@@ -20,10 +20,10 @@ type GetProductCond struct {
 }
 
 type Product struct {
-	Id       string
-	Name     string
-	Image    string
-	Amount   int
-	Quantity int
-	Status   constant.ProductStatusEnum
+	Id        string
+	Name      string
+	Image     string
+	Amount    int
+	Inventory int
+	Status    constant.ProductStatusEnum
 }

@@ -17,7 +17,7 @@ import (
 
 type IOrderUseCase interface {
 	CreateOrder(ctx context.Context, cond *bo.CreateOrderCond) error
-	GetOrderList(ctx context.Context) ([]*bo.Order, error)
+	GetOrderList(ctx context.Context) ([]*bo.Txn, error)
 }
 
 func newOrderUseCase(in digIn) IOrderUseCase {
@@ -101,6 +101,7 @@ func (uc *orderUseCase) CreateOrder(ctx context.Context, cond *bo.CreateOrderCon
 
 		return nil
 	}
+
 	if err := db.Transaction(txn); err != nil {
 		return xerrors.Errorf("sb *syncBankUseCase -> db.Transaction: %w", err)
 	}
@@ -108,7 +109,7 @@ func (uc *orderUseCase) CreateOrder(ctx context.Context, cond *bo.CreateOrderCon
 	return nil
 }
 
-func (uc *orderUseCase) GetOrderList(ctx context.Context) ([]*bo.Order, error) {
+func (uc *orderUseCase) GetOrderList(ctx context.Context) ([]*bo.Txn, error) {
 	defer timelogger.LogTime(ctx)()
 
 	memberInfo, ok := ctxs.GetSession(ctx)
@@ -137,15 +138,21 @@ func (uc *orderUseCase) GetOrderList(ctx context.Context) ([]*bo.Order, error) {
 	}
 
 	// make order data
-	result := make([]*bo.Order, 0, len(txn))
+	result := make([]*bo.Txn, 0, len(txn))
 	for _, t := range txn {
-		result = append(result, &bo.Order{
+		tempTxn := &bo.Txn{
 			Id:            t.Id,
 			PaymentNumber: t.PaymentNumber,
 			Amount:        t.Amount,
 			Status:        t.Status,
-			Item:          txnItem[t.Id],
-		})
+		}
+		if val, ok := txnItem[t.Id]; ok {
+			tempTxn.Item = val
+		} else {
+			tempTxn.Item = make([]*bo.TxnItem, 0)
+		}
+
+		result = append(result, tempTxn)
 	}
 
 	return result, nil
