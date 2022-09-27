@@ -1,12 +1,15 @@
 package dto
 
+import "simon/mall/service/internal/constant"
+
 type MemberChart struct {
-	Id        string `json:"id"`
-	Name      string `json:"name"`      // product name
-	Amount    int    `json:"amount"`    // 價格
-	Quantity  int    `json:"quantity"`  // 數量
-	Image     string `json:"image"`     // 圖片
-	Inventory string `json:"inventory"` // 庫存
+	Id        string                     `json:"id"`
+	Name      string                     `json:"name"`      // product name
+	Amount    int                        `json:"amount"`    // 價格
+	Quantity  int                        `json:"quantity"`  // 數量
+	Image     string                     `json:"image"`     // 圖片
+	Inventory string                     `json:"inventory"` // 庫存
+	Status    constant.ProductStatusEnum `json:"status"`    // 產品狀態
 }
 
 type MemberChartUpdateCond struct {

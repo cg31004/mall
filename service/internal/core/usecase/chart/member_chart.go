@@ -50,7 +50,6 @@ func (uc *memberChartUseCase) GetMemberChart(ctx context.Context) ([]*bo.MemberC
 	result := make([]*bo.MemberChart, len(charts))
 	// use chart & product combination result
 	for i := 0; i < len(charts); i++ {
-		// todo 檢查 chart對應不上product
 		result[i] = &bo.MemberChart{
 			Id:       charts[i].Id,
 			Quantity: charts[i].Quantity,
@@ -62,11 +61,13 @@ func (uc *memberChartUseCase) GetMemberChart(ctx context.Context) ([]*bo.MemberC
 			result[i].Amount = 0
 			result[i].Image = ""
 			result[i].Inventory = 0
+			result[i].Status = constant.ProductStatusEnum_Closed
 		} else {
 			result[i].Name = val.Name
 			result[i].Amount = val.Amount
 			result[i].Image = val.Image
 			result[i].Inventory = val.Inventory
+			result[i].Status = val.Status
 		}
 	}
 

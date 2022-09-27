@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 
+	"simon/mall/service/internal/constant"
 	"simon/mall/service/internal/core/common/product/mock_common_product"
 	"simon/mall/service/internal/errs"
 	"simon/mall/service/internal/model/bo"
@@ -251,9 +252,6 @@ func (s *chartSuit) Test_MemberChart_Create() {
 
 func (s *chartSuit) Test_MemberChart_Get() {
 	var err error
-	//var chart []*bo.MemberChart
-	//expectedChart := make([]*bo.MemberChart, 0)
-	//productId := "123"
 
 	//
 	s.SetupTest()
@@ -283,4 +281,29 @@ func (s *chartSuit) Test_MemberChart_Get() {
 	s.in.ProductCommon.(*mock_common_product.MockProductCommon).EXPECT().GetProduct(s.ctx).Return(nil, errs.CommonUnknownError)
 	_, err = s.memberChartUseCase.GetMemberChart(s.ctx)
 	s.Assert().ErrorIs(errs.CommonUnknownError, err)
+
+	//
+	s.SetupTest()
+	s.T().Log("get:combine chart")
+	product := map[string]*bo.ProductCommon{
+		"1": {Name: "product1", Image: "image1", Amount: 10, Inventory: 4, Status: constant.ProductStatusEnum_Closed},
+		"2": {Name: "product2", Image: "image2", Amount: 50, Inventory: 1, Status: constant.ProductStatusEnum_Open},
+	}
+	poChart := []*po.MemberChart{
+		{Id: "1", MemberId: memberDefaultId, ProductId: "4", Quantity: 1},
+		{Id: "2", MemberId: memberDefaultId, ProductId: "3", Quantity: 2},
+		{Id: "3", MemberId: memberDefaultId, ProductId: "2", Quantity: 4},
+		{Id: "4", MemberId: memberDefaultId, ProductId: "1", Quantity: 8},
+	}
+	wantCharts := []*bo.MemberChart{
+		{Id: "1", Name: constant.Unknown_Product, Amount: 0, Quantity: 1, Image: "", Inventory: 0, Status: constant.ProductStatusEnum_Closed},
+		{Id: "2", Name: constant.Unknown_Product, Amount: 0, Quantity: 2, Image: "", Inventory: 0, Status: constant.ProductStatusEnum_Closed},
+		{Id: "3", Name: "product2", Amount: 50, Quantity: 4, Image: "image2", Inventory: 1, Status: constant.ProductStatusEnum_Open},
+		{Id: "4", Name: "product1", Amount: 10, Quantity: 8, Image: "image1", Inventory: 4, Status: constant.ProductStatusEnum_Closed},
+	}
+	s.in.MemberChartRepo.(*mock_repository.MockMemberChartRepo).EXPECT().GetList(s.ctx, mock.Anything, mock.Anything).Return(poChart, nil)
+	s.in.ProductCommon.(*mock_common_product.MockProductCommon).EXPECT().GetProduct(s.ctx).Return(product, nil)
+	charts, err := s.memberChartUseCase.GetMemberChart(s.ctx)
+	s.Assert().ErrorIs(nil, err)
+	s.Assert().Equal(wantCharts, charts)
 }

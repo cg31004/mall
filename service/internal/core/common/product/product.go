@@ -26,7 +26,7 @@ type productCommon struct {
 	in digIn
 }
 
-// todo product 更新，需要刷新
+// todo product 更新，需要刷新庫存
 func (c *productCommon) GetProduct(ctx context.Context) (map[string]*bo.ProductCommon, error) {
 	defer timelogger.LogTime(ctx)()
 
