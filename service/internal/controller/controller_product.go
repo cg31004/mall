@@ -73,7 +73,7 @@ func (ctrl *productCtrl) GetList(ctx *gin.Context) {
 func (ctrl *productCtrl) Get(ctx *gin.Context) {
 	defer timelogger.LogTime(ctx)()
 
-	req := &dto.GetProductListCond{}
+	req := &dto.GetProductCond{}
 	if err := ctrl.in.Request.Bind(ctx, &req); err != nil {
 		ctrl.in.SetResponse.StandardResp(ctx, http.StatusBadRequest, errs.RequestParamParseFailed)
 		return
