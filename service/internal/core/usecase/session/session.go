@@ -11,7 +11,6 @@ import (
 	"simon/mall/service/internal/model/po"
 	"simon/mall/service/internal/utils/hash"
 	"simon/mall/service/internal/utils/timelogger"
-	"simon/mall/service/internal/utils/uuid"
 )
 
 type ISessionUseCase interface {
@@ -49,7 +48,7 @@ func (uc *sessionUseCase) Login(ctx context.Context, cond *bo.MemberSessionCond)
 		return nil, xerrors.Errorf("%w", errs.MemberNoMatch)
 	}
 
-	token := uuid.GetUUID()
+	token := uc.in.Uuid.GetUUID()
 	// set login session
 	session := &po.MemberSession{
 		Id:      member.Id,

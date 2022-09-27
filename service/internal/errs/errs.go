@@ -3,10 +3,10 @@ package errs
 import "simon/mall/service/internal/thirdparty/errortool"
 
 var (
-	ConvertDB = errortool.ConvertDB
-	Parse     = errortool.Parse
-	ConciseParseParse     = errortool.ConciseParse
-	Equal     = errortool.Equal
+	ConvertDB         = errortool.ConvertDB
+	Parse             = errortool.Parse
+	ConciseParseParse = errortool.ConciseParse
+	Equal             = errortool.Equal
 )
 
 var (
@@ -46,13 +46,9 @@ var (
 )
 
 var (
-	memberGroup             = errortool.Codes.Group("05")
-	MemberNoMatch           = memberGroup.Error("001", "登入失败，帐号或密码错误")
-	MemberTokenError        = memberGroup.Error("002", "请重新登入")
-	MemberDuplicateError    = memberGroup.Error("003", "帐号已被使用，请选择新的帐号")
-	MemberFieldInvalidInput = memberGroup.Error("004", "帐号资料不合规")
-	MemberNoRaw             = memberGroup.Error("005", "查无账户")
-	MemberLocked            = memberGroup.Error("006", "帐号被锁定")
+	memberGroup      = errortool.Codes.Group("05")
+	MemberNoMatch    = memberGroup.Error("001", "登入失败，帐号或密码错误")
+	MemberTokenError = memberGroup.Error("002", "请重新登入")
 )
 
 var (

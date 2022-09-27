@@ -10,7 +10,6 @@ import (
 	"simon/mall/service/internal/model/po"
 	"simon/mall/service/internal/utils/ctxs"
 	"simon/mall/service/internal/utils/timelogger"
-	"simon/mall/service/internal/utils/uuid"
 )
 
 type IMemberChartUseCase interface {
@@ -38,8 +37,8 @@ func (uc *memberChartUseCase) GetMemberChart(ctx context.Context) ([]*bo.MemberC
 
 	db := uc.in.DB.Session()
 	charts, err := uc.in.MemberChartRepo.GetList(ctx, db, &po.MemberChartSearch{MemberId: memberInfo.Id})
-	if err != nil && err != errs.ConciseParseParse(err) {
-		return nil, xerrors.Errorf("memberChartUseCase.GetMemberChart -> MemberChartRepo.GetList : %w", errs.MemberNoRaw)
+	if err != nil {
+		return nil, xerrors.Errorf("memberChartUseCase.GetMemberChart -> MemberChartRepo.GetList : %w", err)
 	}
 
 	products, err := uc.in.ProductCommon.GetProduct(ctx)
@@ -107,7 +106,7 @@ func (uc *memberChartUseCase) CreateMemberChart(ctx context.Context, cond *bo.Me
 	// chart = nil 代表沒資料 => create   than  update
 	if chart == nil {
 		if err := uc.in.MemberChartRepo.Insert(ctx, db, &po.MemberChart{
-			Id:        uuid.GetUUID(),
+			Id:        uc.in.Uuid.GetUUID(),
 			MemberId:  memberInfo.Id,
 			ProductId: cond.ProductId,
 			Quantity:  cond.Quantity,

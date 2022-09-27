@@ -13,7 +13,6 @@ import (
 	"simon/mall/service/internal/model/po"
 	"simon/mall/service/internal/utils/ctxs"
 	"simon/mall/service/internal/utils/timelogger"
-	"simon/mall/service/internal/utils/uuid"
 )
 
 type IOrderUseCase interface {
@@ -57,7 +56,7 @@ func (uc *orderUseCase) CreateOrder(ctx context.Context, cond *bo.CreateOrderCon
 	}
 
 	txn := func(tx *gorm.DB) error {
-		transactionId := uuid.GetUUID()
+		transactionId := uc.in.Uuid.GetUUID()
 		// amount 訂單總額
 		var amount int
 

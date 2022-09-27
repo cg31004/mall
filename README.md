@@ -22,11 +22,6 @@ ops_config:
     username: "root"
     password: "abc123"
     database: "mall"
-  redis_service:
-    address: 'localhost:6379'
-    password: ''
-    db: 0
-
   ```
 
 ### config.yaml
@@ -128,3 +123,17 @@ app_config:
    	"simon/mall/service/internal/utils/timelogger"
    )
    ```
+## 自動產生mock相關檔案
+
+- 需要安裝mockery
+  
+  ```shell
+  # golang 1.16
+  go install github.com/vektra/mockery/v2@v2.12.0
+  ```
+
+- 執行make對應腳本
+  
+  ```shell
+  make mock
+  ```
