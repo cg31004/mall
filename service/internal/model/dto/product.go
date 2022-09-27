@@ -17,5 +17,5 @@ type ProductResp struct {
 }
 
 type GetProductCond struct {
-	Id string
+	Id string `form:"id"`
 }
