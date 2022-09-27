@@ -145,3 +145,16 @@ app_config:
 * [文件](./doc)
     * [資料庫](./doc/db)
     * [購物](./doc/logic/transaction/README.md)
+    
+
+## TODO
+### 流程
+
+- 優化交易處理
+- 鎖可以使用redis
+- 登入入庫做SSO
+
+### 結構 
+
+- dto 資料交流測試
+- po  資料庫的整合測試
