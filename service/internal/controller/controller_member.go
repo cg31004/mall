@@ -10,7 +10,6 @@ import (
 	"simon/mall/service/internal/errs"
 	"simon/mall/service/internal/model/bo"
 	"simon/mall/service/internal/model/dto"
-	"simon/mall/service/internal/utils/ctxs"
 	"simon/mall/service/internal/utils/timelogger"
 )
 
@@ -69,18 +68,7 @@ func (ctrl *memberCtrl) Login(ctx *gin.Context) {
 func (ctrl *memberCtrl) Logout(ctx *gin.Context) {
 	defer timelogger.LogTime(ctx)()
 
-	session, ok := ctxs.GetSession(ctx)
-	if !ok {
-		ctrl.in.SetResponse.StandardResp(ctx, http.StatusBadRequest, errs.MemberTokenError)
-		return
-	}
-
-	cond := &bo.MemberToken{
-		Token: session.Token,
-	}
-
-	err := ctrl.in.MemberIn.Session.Logout(ctx, cond)
-	if err != nil {
+	if err := ctrl.in.MemberIn.Session.Logout(ctx); err != nil {
 		ctrl.in.SetResponse.StandardResp(ctx, http.StatusBadRequest, err)
 		return
 	}

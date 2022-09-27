@@ -10,6 +10,8 @@ import (
 	"simon/mall/service/internal/config"
 )
 
+//go:generate mockery --name ILocalCache --structname MockLocalCache --output mock_cache --outpkg mock_cache --filename mock_cache.go --with-expecter
+
 var local *localCache
 
 type ILocalCache interface {

@@ -24,6 +24,35 @@ func (_m *MockTxnItemCommon) EXPECT() *MockTxnItemCommon_Expecter {
 	return &MockTxnItemCommon_Expecter{mock: &_m.Mock}
 }
 
+// DeleteTxnItem provides a mock function with given fields: ctx, cond
+func (_m *MockTxnItemCommon) DeleteTxnItem(ctx context.Context, cond *bo.DelTxnItemMapCond) {
+	_m.Called(ctx, cond)
+}
+
+// MockTxnItemCommon_DeleteTxnItem_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DeleteTxnItem'
+type MockTxnItemCommon_DeleteTxnItem_Call struct {
+	*mock.Call
+}
+
+// DeleteTxnItem is a helper method to define mock.On call
+//  - ctx context.Context
+//  - cond *bo.DelTxnItemMapCond
+func (_e *MockTxnItemCommon_Expecter) DeleteTxnItem(ctx interface{}, cond interface{}) *MockTxnItemCommon_DeleteTxnItem_Call {
+	return &MockTxnItemCommon_DeleteTxnItem_Call{Call: _e.mock.On("DeleteTxnItem", ctx, cond)}
+}
+
+func (_c *MockTxnItemCommon_DeleteTxnItem_Call) Run(run func(ctx context.Context, cond *bo.DelTxnItemMapCond)) *MockTxnItemCommon_DeleteTxnItem_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context), args[1].(*bo.DelTxnItemMapCond))
+	})
+	return _c
+}
+
+func (_c *MockTxnItemCommon_DeleteTxnItem_Call) Return() *MockTxnItemCommon_DeleteTxnItem_Call {
+	_c.Call.Return()
+	return _c
+}
+
 // GetTxnItem provides a mock function with given fields: ctx, cond
 func (_m *MockTxnItemCommon) GetTxnItem(ctx context.Context, cond *bo.GetTxnItemMapCond) (map[string][]*bo.OrderItem, error) {
 	ret := _m.Called(ctx, cond)

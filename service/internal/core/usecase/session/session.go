@@ -9,13 +9,14 @@ import (
 	"simon/mall/service/internal/errs"
 	"simon/mall/service/internal/model/bo"
 	"simon/mall/service/internal/model/po"
+	"simon/mall/service/internal/utils/ctxs"
 	"simon/mall/service/internal/utils/hash"
 	"simon/mall/service/internal/utils/timelogger"
 )
 
 type ISessionUseCase interface {
 	Login(ctx context.Context, cond *bo.MemberSessionCond) (*bo.MemberToken, error)
-	Logout(ctx context.Context, token *bo.MemberToken) error
+	Logout(ctx context.Context) error
 	AuthMember(ctx context.Context, token *bo.MemberToken) (*bo.MemberSession, error)
 }
 
@@ -44,6 +45,7 @@ func (uc *sessionUseCase) Login(ctx context.Context, cond *bo.MemberSessionCond)
 	if err != nil {
 		return nil, xerrors.Errorf("sessionUseCase.checkUserPassword -> hash.GetPasswordHash: %w", err)
 	}
+
 	if hashPasswd != member.Password {
 		return nil, xerrors.Errorf("%w", errs.MemberNoMatch)
 	}
@@ -63,8 +65,15 @@ func (uc *sessionUseCase) Login(ctx context.Context, cond *bo.MemberSessionCond)
 	return &bo.MemberToken{Token: token}, nil
 }
 
-func (uc *sessionUseCase) Logout(ctx context.Context, token *bo.MemberToken) error {
-	exist, err := uc.in.SessionRepo.CheckSessionExist(ctx, token.Token)
+func (uc *sessionUseCase) Logout(ctx context.Context) error {
+	defer timelogger.LogTime(ctx)()
+
+	memberInfo, ok := ctxs.GetSession(ctx)
+	if !ok {
+		return errs.MemberTokenError
+	}
+
+	exist, err := uc.in.SessionRepo.CheckSessionExist(ctx, memberInfo.Token)
 	if err != nil {
 		return xerrors.Errorf("sessionUseCase.Logout -> SessionRepo.CheckSessionExist: %w", err)
 	}
@@ -73,7 +82,7 @@ func (uc *sessionUseCase) Logout(ctx context.Context, token *bo.MemberToken) err
 		return errs.MemberTokenError
 	}
 
-	if err = uc.in.SessionRepo.RemoveUserLogin(ctx, token.Token); err != nil {
+	if err = uc.in.SessionRepo.RemoveUserLogin(ctx, memberInfo.Token); err != nil {
 		return xerrors.Errorf("sessionUseCase.Logout -> SessionRepo.RemoveUserLogin: %w", err)
 	}
 
