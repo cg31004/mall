@@ -7,6 +7,7 @@ import (
 	"simon/mall/service/internal/core/common/transaction"
 	"simon/mall/service/internal/repository"
 	"simon/mall/service/internal/thirdparty/mysqlcli"
+	"simon/mall/service/internal/utils/uuid"
 )
 
 func NewOrder(in digIn) digOut {
@@ -23,7 +24,8 @@ func NewOrder(in digIn) digOut {
 type digIn struct {
 	dig.In
 	// 套件
-	DB mysqlcli.IMySQLClient
+	DB   mysqlcli.IMySQLClient
+	Uuid uuid.IUuid
 
 	// Common
 	TxnItemCommon transaction.ITxnItemCommon

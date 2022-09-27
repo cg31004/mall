@@ -17,7 +17,6 @@ func NewRepository(in repositoryIn) repositoryOut {
 			SessionRepo:     newSessionRepoByRedis(in),
 			TxnItemRepo:     newTxnItemRepo(in),
 			TxnRepo:         newTxnRepo(in),
-			PaymentRepo:     newPaymentRepo(in),
 			ProductRepo:     newProductRepo(in),
 		},
 	}
@@ -46,6 +45,5 @@ type repositoryOut struct {
 	TxnItemRepo     ITxnItemRepo
 	TxnRepo         ITxnRepo
 	MemberChartRepo IMemberChartRepo
-	PaymentRepo     IPaymentRepo
 	ProductRepo     IProductRepo
 }

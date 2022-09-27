@@ -6,6 +6,7 @@ import (
 	"simon/mall/service/internal/thirdparty/localcache"
 	"simon/mall/service/internal/thirdparty/logger"
 	"simon/mall/service/internal/thirdparty/mysqlcli"
+	"simon/mall/service/internal/utils/uuid"
 )
 
 func provideThirdParty(binder *dig.Container) {
@@ -22,6 +23,10 @@ func provideThirdParty(binder *dig.Container) {
 	}
 
 	if err := binder.Provide(localcache.NewDefault); err != nil {
+		panic(err)
+	}
+
+	if err := binder.Provide(uuid.NewIdGenerator); err != nil {
 		panic(err)
 	}
 

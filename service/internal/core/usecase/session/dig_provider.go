@@ -4,6 +4,7 @@ import (
 	"go.uber.org/dig"
 
 	"simon/mall/service/internal/repository"
+	"simon/mall/service/internal/utils/uuid"
 
 	"simon/mall/service/internal/thirdparty/mysqlcli"
 )
@@ -22,7 +23,8 @@ func NewSession(in digIn) digOut {
 type digIn struct {
 	dig.In
 	// 套件
-	DB mysqlcli.IMySQLClient
+	DB   mysqlcli.IMySQLClient
+	Uuid uuid.IUuid
 
 	// Common
 

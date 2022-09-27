@@ -13,12 +13,11 @@ import (
 	"simon/mall/service/internal/model/po"
 	"simon/mall/service/internal/utils/ctxs"
 	"simon/mall/service/internal/utils/timelogger"
-	"simon/mall/service/internal/utils/uuid"
 )
 
 type IOrderUseCase interface {
 	CreateOrder(ctx context.Context, cond *bo.CreateOrderCond) error
-	GetOrderList(ctx context.Context) ([]*bo.Order, error)
+	GetOrderList(ctx context.Context) ([]*bo.Txn, error)
 }
 
 func newOrderUseCase(in digIn) IOrderUseCase {
@@ -43,6 +42,9 @@ func (uc *orderUseCase) CreateOrder(ctx context.Context, cond *bo.CreateOrderCon
 
 	uc.orderLock.Lock()
 	defer uc.orderLock.Unlock()
+	// refresh product quantity
+	defer uc.in.ProductCommon.DeleteProductCache(ctx)
+	defer uc.in.TxnItemCommon.DeleteTxnItem(ctx, &bo.DelTxnItemMapCond{MemberId: memberInfo.Id})
 
 	db := uc.in.DB.Session()
 	// 取得個人購物車
@@ -57,12 +59,18 @@ func (uc *orderUseCase) CreateOrder(ctx context.Context, cond *bo.CreateOrderCon
 	}
 
 	txn := func(tx *gorm.DB) error {
-		transactionId := uuid.GetUUID()
+		transactionId := uc.in.Uuid.GetUUID()
+		// amount 訂單總額
 		var amount int
 
 		// txnItem
 		poItem := make([]*po.TransactionItem, len(chart))
 		for _, c := range chart {
+			// 商品已下架或沒有庫存
+			if val, ok := products[c.ProductId]; !ok || val.Inventory < c.Quantity || val.Status != constant.ProductStatusEnum_Open {
+				return xerrors.Errorf("orderUseCase.CreateOrder -> ProductCommon.GetProduct: %w ", errs.OrderProductNoMatch)
+			}
+
 			item := &po.TransactionItem{
 				TransactionId: transactionId,
 				Name:          products[c.ProductId].Name,
@@ -93,17 +101,15 @@ func (uc *orderUseCase) CreateOrder(ctx context.Context, cond *bo.CreateOrderCon
 
 		return nil
 	}
+
 	if err := db.Transaction(txn); err != nil {
 		return xerrors.Errorf("sb *syncBankUseCase -> db.Transaction: %w", err)
 	}
 
-	// refresh product quantity
-	uc.in.ProductCommon.DeleteProductCache(ctx)
-
 	return nil
 }
 
-func (uc *orderUseCase) GetOrderList(ctx context.Context) ([]*bo.Order, error) {
+func (uc *orderUseCase) GetOrderList(ctx context.Context) ([]*bo.Txn, error) {
 	defer timelogger.LogTime(ctx)()
 
 	memberInfo, ok := ctxs.GetSession(ctx)
@@ -132,15 +138,21 @@ func (uc *orderUseCase) GetOrderList(ctx context.Context) ([]*bo.Order, error) {
 	}
 
 	// make order data
-	result := make([]*bo.Order, 0, len(txn))
+	result := make([]*bo.Txn, 0, len(txn))
 	for _, t := range txn {
-		result = append(result, &bo.Order{
+		tempTxn := &bo.Txn{
 			Id:            t.Id,
 			PaymentNumber: t.PaymentNumber,
 			Amount:        t.Amount,
 			Status:        t.Status,
-			Item:          txnItem[t.Id],
-		})
+		}
+		if val, ok := txnItem[t.Id]; ok {
+			tempTxn.Item = val
+		} else {
+			tempTxn.Item = make([]*bo.TxnItem, 0)
+		}
+
+		result = append(result, tempTxn)
 	}
 
 	return result, nil

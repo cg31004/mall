@@ -11,7 +11,7 @@ import (
 	"simon/mall/service/internal/utils/timelogger"
 )
 
-//go:generate mockery --name IPaymentRepo --structname MockPaymentRepo --output mock_repository --outpkg mock_repository --filename mock_payment.go --with-expecter
+//go:generate mockery --name IProductRepo --structname MockPaymentRepo --output mock_repository --outpkg mock_repository --filename mock_product.go --with-expecter
 
 type IProductRepo interface {
 	First(ctx context.Context, db *gorm.DB, id string) (*po.Product, error)
@@ -54,6 +54,7 @@ func (repo *productRepo) GetList(ctx context.Context, db *gorm.DB, cond *po.Prod
 	return products, nil
 }
 
+//todo: 產品功能:頁面
 func (repo *productRepo) GetListPager(ctx context.Context, db *gorm.DB, cond *po.ProductSearch, pager *po.Pager) (*po.PagingResult, error) {
 	defer timelogger.LogTime(ctx)()
 
@@ -73,9 +74,14 @@ func (repo *productRepo) productListCond(cond *po.ProductSearch, pager *po.Pager
 		db = db.Model(&po.Product{})
 
 		if cond != nil {
+			// 模糊搜尋產品名稱
 			if cond.Name != nil {
 				likeStr := "%" + *cond.Name + "%"
 				db = db.Where("`name` like ?", likeStr)
+			}
+
+			if cond.Status != nil {
+				db = db.Where("`status` = ?", cond.Status)
 			}
 		}
 

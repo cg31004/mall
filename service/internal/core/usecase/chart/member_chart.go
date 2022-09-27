@@ -5,12 +5,12 @@ import (
 
 	"golang.org/x/xerrors"
 
+	"simon/mall/service/internal/constant"
 	"simon/mall/service/internal/errs"
 	"simon/mall/service/internal/model/bo"
 	"simon/mall/service/internal/model/po"
 	"simon/mall/service/internal/utils/ctxs"
 	"simon/mall/service/internal/utils/timelogger"
-	"simon/mall/service/internal/utils/uuid"
 )
 
 type IMemberChartUseCase interface {
@@ -38,8 +38,8 @@ func (uc *memberChartUseCase) GetMemberChart(ctx context.Context) ([]*bo.MemberC
 
 	db := uc.in.DB.Session()
 	charts, err := uc.in.MemberChartRepo.GetList(ctx, db, &po.MemberChartSearch{MemberId: memberInfo.Id})
-	if err != nil && err != errs.ConciseParseParse(err) {
-		return nil, xerrors.Errorf("memberChartUseCase.GetMemberChart -> MemberChartRepo.GetList : %w", errs.MemberNoRaw)
+	if err != nil {
+		return nil, xerrors.Errorf("memberChartUseCase.GetMemberChart -> MemberChartRepo.GetList : %w", err)
 	}
 
 	products, err := uc.in.ProductCommon.GetProduct(ctx)
@@ -52,10 +52,22 @@ func (uc *memberChartUseCase) GetMemberChart(ctx context.Context) ([]*bo.MemberC
 	for i := 0; i < len(charts); i++ {
 		result[i] = &bo.MemberChart{
 			Id:       charts[i].Id,
-			Name:     products[charts[i].ProductId].Name,
-			Amount:   products[charts[i].ProductId].Amount,
 			Quantity: charts[i].Quantity,
-			Image:    products[charts[i].ProductId].Image,
+		}
+
+		// 預期外的購物車產品
+		if val, ok := products[charts[i].ProductId]; !ok {
+			result[i].Name = constant.Unknown_Product
+			result[i].Amount = 0
+			result[i].Image = ""
+			result[i].Inventory = 0
+			result[i].Status = constant.ProductStatusEnum_Closed
+		} else {
+			result[i].Name = val.Name
+			result[i].Amount = val.Amount
+			result[i].Image = val.Image
+			result[i].Inventory = val.Inventory
+			result[i].Status = val.Status
 		}
 	}
 
@@ -70,6 +82,10 @@ func (uc *memberChartUseCase) UpdateMemberChart(ctx context.Context, cond *bo.Me
 		return errs.MemberTokenError
 	}
 
+	if err := uc.validateUpdate(ctx, cond); err != nil {
+		return xerrors.Errorf("memberChartUseCase.UpdateMemberChart -> validateUpdate : %w", err)
+	}
+
 	db := uc.in.DB.Session()
 	if err := uc.in.MemberChartRepo.Update(ctx, db, &po.MemberChartUpdate{
 		Id:       cond.Id,
@@ -77,6 +93,18 @@ func (uc *memberChartUseCase) UpdateMemberChart(ctx context.Context, cond *bo.Me
 		Quantity: cond.Quantity,
 	}); err != nil {
 		return xerrors.Errorf("memberChartUseCase.UpdateMemberChart -> ProductCommon.GetProduct : %w", err)
+	}
+
+	return nil
+}
+
+func (uc *memberChartUseCase) validateUpdate(ctx context.Context, cond *bo.MemberChartUpdateCond) interface{} {
+	if len(cond.Id) == 0 {
+		return xerrors.Errorf("memberChartUseCase.UpdateMemberChart -> cond.Id == 0: %w", errs.RequestParamInvalid)
+	}
+
+	if cond.Quantity <= 0 {
+		return xerrors.Errorf("memberChartUseCase.UpdateMemberChart -> cond.Quantity <= 0: %w", errs.RequestParamInvalid)
 	}
 
 	return nil
@@ -107,7 +135,7 @@ func (uc *memberChartUseCase) CreateMemberChart(ctx context.Context, cond *bo.Me
 	// chart = nil 代表沒資料 => create   than  update
 	if chart == nil {
 		if err := uc.in.MemberChartRepo.Insert(ctx, db, &po.MemberChart{
-			Id:        uuid.GetUUID(),
+			Id:        uc.in.Uuid.GetUUID(),
 			MemberId:  memberInfo.Id,
 			ProductId: cond.ProductId,
 			Quantity:  cond.Quantity,
@@ -138,9 +166,15 @@ func (uc *memberChartUseCase) validateCreate(ctx context.Context, cond *bo.Membe
 func (uc *memberChartUseCase) DeleteMemberChart(ctx context.Context, cond *bo.MemberChartDelCond) error {
 	defer timelogger.LogTime(ctx)()
 
+	memberInfo, ok := ctxs.GetSession(ctx)
+	if !ok {
+		return errs.MemberTokenError
+	}
+
 	db := uc.in.DB.Session()
 	if err := uc.in.MemberChartRepo.Delete(ctx, db, &po.MemberChartDel{
-		Id: cond.Id,
+		Id:       cond.Id,
+		MemberId: memberInfo.Id,
 	}); err != nil {
 		return xerrors.Errorf("memberChartUseCase.DeleteMemberChart -> MemberChartRepo.Delete : %w", err)
 	}

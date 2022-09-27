@@ -4,7 +4,3 @@ ops_config:
     username: "root"
     password: "abc123"
     database: "mall"
-  redis_service:
-    address: 'localhost:6379'
-    password: ''
-    db: 0

@@ -42,7 +42,8 @@ type MemberChartSearch struct {
 }
 
 type MemberChartDel struct {
-	Id string
+	Id       string
+	MemberId string
 }
 
 type MemberChartUpdate struct {

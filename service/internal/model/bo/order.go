@@ -2,15 +2,15 @@ package bo
 
 import "simon/mall/service/internal/constant"
 
-type Order struct {
+type Txn struct {
 	Id            string
 	PaymentNumber string
 	Amount        int
 	Status        constant.TransactionStatusEnum
-	Item          []*OrderItem
+	Item          []*TxnItem
 }
 
-type OrderItem struct {
+type TxnItem struct {
 	Name     string
 	Amount   int
 	Quantity int
@@ -20,6 +20,10 @@ type OrderItem struct {
 type GetTxnItemMapCond struct {
 	MemberId string
 	TxnId    []string
+}
+
+type DelTxnItemMapCond struct {
+	MemberId string
 }
 
 type CreateOrderCond struct {
