@@ -2,6 +2,8 @@ package repository
 
 import (
 	"context"
+	"fmt"
+	"sync"
 	"time"
 
 	"golang.org/x/xerrors"
@@ -31,9 +33,14 @@ func newSessionRepoByRedis(in repositoryIn) ISessionRepo {
 
 type sessionRepoByRedis struct {
 	in repositoryIn
+
+	sync.Mutex
 }
 
 func (dao *sessionRepoByRedis) SetMemberLogin(ctx context.Context, session *po.MemberSession) error {
+	dao.Mutex.Lock()
+	defer dao.Mutex.Unlock()
+
 	isNeedKick, err := dao.CheckTokenExist(ctx, session.Id)
 	if err != nil {
 		return xerrors.Errorf("%w", err)
@@ -95,12 +102,12 @@ func (dao *sessionRepoByRedis) GetSessionByToken(ctx context.Context, token stri
 		return nil, xerrors.New("not match data")
 	}
 
-	session, ok := val.(po.MemberSession)
+	session, ok := val.(*po.MemberSession)
 	if !ok {
 		return nil, xerrors.New("no match data")
 	}
 
-	return &session, nil
+	return session, nil
 
 }
 
@@ -116,9 +123,11 @@ func (dao *sessionRepoByRedis) RemoveUserLogin(ctx context.Context, token string
 }
 
 func (dao *sessionRepoByRedis) keyByToken(token string) string {
+	fmt.Println(constant.Cache_SessionByToken + token)
 	return constant.Cache_SessionByToken + token
 }
 
 func (dao *sessionRepoByRedis) keyByMemberId(memberId string) string {
+	fmt.Println(constant.Cache_SessionByMemberId + memberId)
 	return constant.Cache_SessionByMemberId + memberId
 }
