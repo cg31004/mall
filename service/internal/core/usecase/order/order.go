@@ -58,6 +58,7 @@ func (uc *orderUseCase) CreateOrder(ctx context.Context, cond *bo.CreateOrderCon
 
 	txn := func(tx *gorm.DB) error {
 		transactionId := uuid.GetUUID()
+		// amount 訂單總額
 		var amount int
 
 		// txnItem

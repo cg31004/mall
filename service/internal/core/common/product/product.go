@@ -30,7 +30,7 @@ type productCommon struct {
 func (c *productCommon) GetProduct(ctx context.Context) (map[string]*bo.ProductCommon, error) {
 	defer timelogger.LogTime(ctx)()
 
-	if cacheProduct, ok := c.in.Cache.Get(constant.CacheProduct); ok {
+	if cacheProduct, ok := c.in.Cache.Get(constant.Cache_Product); ok {
 		if temp, ok := cacheProduct.(map[string]*bo.ProductCommon); ok {
 			return temp, nil
 		}
@@ -51,11 +51,11 @@ func (c *productCommon) GetProduct(ctx context.Context) (map[string]*bo.ProductC
 		}
 	}
 
-	c.in.Cache.Save(constant.CacheProduct, result)
+	c.in.Cache.Save(constant.Cache_Product, result)
 
 	return result, nil
 }
 
 func (c *productCommon) DeleteProductCache(ctx context.Context) {
-	c.in.Cache.Delete(constant.CacheProduct)
+	c.in.Cache.Delete(constant.Cache_Product)
 }

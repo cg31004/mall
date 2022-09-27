@@ -46,7 +46,7 @@ func (uc *sessionUseCase) Login(ctx context.Context, cond *bo.MemberSessionCond)
 		return nil, xerrors.Errorf("sessionUseCase.checkUserPassword -> hash.GetPasswordHash: %w", err)
 	}
 	if hashPasswd != member.Password {
-		return nil, errs.MemberNoMatch
+		return nil, xerrors.Errorf("%w", errs.MemberNoMatch)
 	}
 
 	token := uuid.GetUUID()

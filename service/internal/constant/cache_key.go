@@ -1,8 +1,8 @@
 package constant
 
 const (
-	CacheSessionByToken    = "member:session:token:"
-	CacheSessionByMemberId = "member:session:memberId:"
-	CacheProduct           = "product:map"
-	CacheMemberTxnItem     = "txnItem:memberId:"
+	Cache_SessionByToken    = "member:session:token:"
+	Cache_SessionByMemberId = "member:session:memberId:"
+	Cache_Product           = "product:map"
+	Cache_MemberTxnItem     = "txnItem:memberId:"
 )

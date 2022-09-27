@@ -116,9 +116,9 @@ func (dao *sessionRepoByRedis) RemoveUserLogin(ctx context.Context, token string
 }
 
 func (dao *sessionRepoByRedis) keyByToken(token string) string {
-	return constant.CacheSessionByToken + token
+	return constant.Cache_SessionByToken + token
 }
 
 func (dao *sessionRepoByRedis) keyByMemberId(memberId string) string {
-	return constant.CacheSessionByMemberId + memberId
+	return constant.Cache_SessionByMemberId + memberId
 }

@@ -9,13 +9,9 @@
 - ./service/internal/sandbox/tools/docker-compose.yaml
 
 ## 設定檔位置
-- ./conf.d/app.yaml
-- ./conf.d/config.yaml
+- ./conf.d/app.yaml --- 連線設定
+- ./conf.d/config.yaml --- 網站設定  
 
-## 連線DEV設定檔
-
--  本機使用docker建立過本地MYSQL / MONGO，則設定黨可以保持本地配置，
--  沒有配置過，則可以修改為連線DEV配置。
 
 ### app.yaml
 
@@ -87,3 +83,48 @@ app_config:
         - thirdparty ---- :第三方提供套件
         - utils ---- :工具包
 ---
+
+
+## Coding Style
+
+1. interface 與實作放在一起，放在跟core中同名的file裡面。
+2. function 預設第一個參數為 context.context。
+    ```go
+    func GetMember(ctx context.Context, name string) (string, error) {
+        return "", nil
+    }
+    ```
+3. const 常數命名風格 駝峰＋底線。
+    ```go
+    const (
+        Cache_SessionByToken    = "member:session:token:"
+        Cache_SessionByMemberId = "member:session:memberId:"
+        Cache_Product           = "product:map"
+        Cache_MemberTxnItem     = "txnItem:memberId:"
+    )
+    ```
+4. interface 的命名為 IMember， interface 的實作物件命名為 member。
+    ```go
+    type IMember interface {
+    }
+    
+    type member struct {
+    }
+    ```
+6. import 格式分成3個區塊，依序為官方package -> 外部package -> 內部package。
+   ```go
+   import (
+   // 官方package
+   "net/http"
+
+   // 外部package
+    "golang.org/x/xerrors"
+      
+
+   // 內部package
+   	"simon/mall/service/internal/constant"
+   	"simon/mall/service/internal/model/bo"
+   	"simon/mall/service/internal/model/po"
+   	"simon/mall/service/internal/utils/timelogger"
+   )
+   ```

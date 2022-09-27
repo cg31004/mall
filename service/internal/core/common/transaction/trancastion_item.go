@@ -29,7 +29,7 @@ type txnItemCommon struct {
 func (c *txnItemCommon) GetTxnItem(ctx context.Context, cond *bo.GetTxnItemMapCond) (map[string][]*bo.OrderItem, error) {
 	defer timelogger.LogTime(ctx)()
 
-	if cacheProduct, ok := c.in.Cache.Get(constant.CacheMemberTxnItem + cond.MemberId); ok {
+	if cacheProduct, ok := c.in.Cache.Get(constant.Cache_MemberTxnItem + cond.MemberId); ok {
 		if temp, ok := cacheProduct.(map[string][]*bo.OrderItem); ok {
 			return temp, nil
 		}
@@ -57,7 +57,7 @@ func (c *txnItemCommon) GetTxnItem(ctx context.Context, cond *bo.GetTxnItemMapCo
 	}
 
 	// 以memberId 當查詢條件
-	c.in.Cache.Save(constant.CacheMemberTxnItem+cond.MemberId, result)
+	c.in.Cache.Save(constant.Cache_MemberTxnItem+cond.MemberId, result)
 
 	return result, nil
 }
