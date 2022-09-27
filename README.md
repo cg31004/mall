@@ -150,6 +150,7 @@ app_config:
 ## TODO
 ### 流程
 
+- ci to github 
 - 優化交易處理
 - 鎖可以使用redis
 - 登入入庫做SSO
